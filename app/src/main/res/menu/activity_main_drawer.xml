@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_emergencyloan"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_emergencyloan" />
         <item
             android:id="@+id/nav_specialloan"
             android:icon="@drawable/ic_menu_gallery"
