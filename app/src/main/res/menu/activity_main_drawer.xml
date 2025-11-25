@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_emergencyloan"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_specialloan"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_specialloan" />
+        <item
+            android:id="@+id/nav_regularloan"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_RegularLoan" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_Logout" />
+    </group>
+</menu>
