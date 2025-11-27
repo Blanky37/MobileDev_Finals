@@ -165,8 +165,8 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Pending Icon"
-                    android:src="@drawable/ic_pending"
-                    android:tint="#F39C12" />
+                    android:src="@drawable/ic_menu_gallery"
+                    app:tint="#F39C12" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -198,7 +198,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_arrow_forward"
+                    android:src="@drawable/ic_menu_gallery"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>
@@ -227,8 +227,8 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="All Applications Icon"
-                    android:src="@drawable/ic_list"
-                    android:tint="#3498DB" />
+                    android:src="@drawable/ic_menu_gallery"
+                    app:tint="#3498DB" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -260,7 +260,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_arrow_forward"
+                    android:src="@drawable/ic_menu_gallery"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>
@@ -289,8 +289,8 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Records Icon"
-                    android:src="@drawable/ic_folder"
-                    android:tint="#27AE60" />
+                    android:src="@drawable/ic_menu_gallery"
+                    app:tint="#27AE60" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -322,7 +322,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_arrow_forward"
+                    android:src="@drawable/ic_menu_gallery"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>
