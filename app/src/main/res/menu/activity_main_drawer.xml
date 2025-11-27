@@ -5,20 +5,24 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_emergencyloan"
+            android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_emergencyloan" />
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_emergencyloan"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Emergency Loan" />
         <item
             android:id="@+id/nav_specialloan"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_specialloan" />
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Special Loan" />
         <item
             android:id="@+id/nav_regularloan"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_RegularLoan" />
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Regular Loan" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_Logout" />
+            android:title="Logout" />
     </group>
 </menu>

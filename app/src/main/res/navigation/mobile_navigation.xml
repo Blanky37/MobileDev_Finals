@@ -2,29 +2,37 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_emergencyloan">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.aquino_bembo_finals.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_emergencyloan"
         android:name="com.example.aquino_bembo_finals.ui.emergencyloan.EmergencyLoanFragment"
-        android:label="@string/menu_emergencyloan"
+        android:label="Emergency Loan"
         tools:layout="@layout/fragment_emergency_loan" />
 
     <fragment
         android:id="@+id/nav_specialloan"
         android:name="com.example.aquino_bembo_finals.ui.specialloan.SpecialLoanFragment"
-        android:label="@string/menu_specialloan"
+        android:label="Special Loan"
         tools:layout="@layout/fragment_special_loan" />
 
     <fragment
         android:id="@+id/nav_regularloan"
         android:name="com.example.aquino_bembo_finals.ui.regularloan.RegularLoanFragment"
-        android:label="@string/menu_RegularLoan"
+        android:label="Regular Loan"
         tools:layout="@layout/fragment_regular_loan" />
+
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_logout"
         android:name="com.example.aquino_bembo_finals.ui.logout.LogoutFragment"
-        android:label="@string/menu_Logout"
+        android:label="Logout"
         tools:layout="@layout/fragment_logout" />
+
 </navigation>
