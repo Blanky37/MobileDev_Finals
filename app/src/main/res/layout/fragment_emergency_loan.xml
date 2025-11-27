@@ -76,7 +76,7 @@
                     android:layout_marginTop="16dp"
                     android:hint="Loan Amount"
                     app:boxBackgroundMode="outline"
-                    app:startIconDrawable="@drawable/ic_money">
+                    app:startIconDrawable="@drawable/ic_menu_gallery">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_loan_amount"

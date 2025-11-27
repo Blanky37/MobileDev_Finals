@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+// We are removing the TextView, so this import is no longer needed.
+// import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+// The default template includes a ViewModel, but it's not needed for this layout yet.
+// import androidx.lifecycle.ViewModelProvider;
 
 import com.example.aquino_bembo_finals.databinding.FragmentGalleryBinding;
 
@@ -18,14 +20,23 @@ public class GalleryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        // The ViewModel is not being used, so we can remove it.
+        // GalleryViewModel galleryViewModel =
+        //         new ViewModelProvider(this).get(GalleryViewModel.class);
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        // The original code that caused the error is removed.
+        // final TextView textView = binding.textGallery;
+        // galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        // --- Your new logic will go here ---
+        // For example, you will set up your RecyclerView here later on.
+        // binding.rvLoanApplications.setLayoutManager(new LinearLayoutManager(getContext()));
+        // You can also control the visibility of the empty state.
+        // binding.layoutEmptyState.setVisibility(View.VISIBLE);
+
         return root;
     }
 

@@ -59,7 +59,7 @@
             android:alpha="0.3"
             android:contentDescription="No loans"
             android:src="@drawable/ic_menu_gallery"
-            android:tint="#BDC3C7" />
+            app:tint="#BDC3C7" />
 
         <TextView
             android:layout_width="wrap_content"
