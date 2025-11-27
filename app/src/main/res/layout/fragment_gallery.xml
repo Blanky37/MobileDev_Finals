@@ -58,7 +58,7 @@
             android:layout_height="120dp"
             android:alpha="0.3"
             android:contentDescription="No loans"
-            android:src="@drawable/ic_empty_state"
+            android:src="@drawable/ic_menu_gallery"
             android:tint="#BDC3C7" />
 
         <TextView
