@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aquino_Bembo_Finals">
         <activity
+            android:name=".Regisration"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
