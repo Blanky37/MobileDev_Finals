@@ -1,10 +1,8 @@
 package com.example.aquino_bembo_finals;
 
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -29,22 +27,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+        // --- THIS IS THE FIX ---
+        // By adding R.id.nav_home to this builder, you are telling the Navigation Component
+        // that "Home" is a main screen. This will:
+        // 1. Show the hamburger icon on the Home screen.
+        // 2. Ensure the drawer item for Home works correctly.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_emergencyloan, R.id.nav_specialloan, R.id.nav_regularloan, R.id.nav_logout)
+                R.id.nav_home, R.id.nav_emergencyloan, R.id.nav_specialloan, R.id.nav_regularloan, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
