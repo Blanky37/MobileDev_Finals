@@ -31,11 +31,6 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
-        // --- THIS IS THE FIX ---
-        // By adding R.id.nav_home to this builder, you are telling the Navigation Component
-        // that "Home" is a main screen. This will:
-        // 1. Show the hamburger icon on the Home screen.
-        // 2. Ensure the drawer item for Home works correctly.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_emergencyloan, R.id.nav_specialloan, R.id.nav_regularloan, R.id.nav_logout)
                 .setOpenableLayout(drawer)
