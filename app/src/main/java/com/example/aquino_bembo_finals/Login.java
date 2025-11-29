@@ -36,6 +36,7 @@ public class Login extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize UI components
         txtEmployeeID = (TextInputEditText) findViewById(R.id.et_employee_id);
         txtPassword = (TextInputEditText) findViewById(R.id.et_password);
         tilEmployeeID = (TextInputLayout) findViewById(R.id.til_employee_id);
@@ -44,6 +45,7 @@ public class Login extends AppCompatActivity {
         tvRegisterLink = (TextView) findViewById(R.id.tv_register_link);
         tvForgotPassword = (TextView) findViewById(R.id.tv_forgot_password);
 
+        // Set up click listeners
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +62,7 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    //Message Window Method (exactly like professor's)
     public void myMessageWindow(String title,String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -74,6 +77,7 @@ public class Login extends AppCompatActivity {
         builder.show();
     }
 
+    // Login Method (following professor's onClick pattern)
     public void onClickLogin(View view) {
         // Clear previous errors
         tilEmployeeID.setError(null);
@@ -101,26 +105,44 @@ public class Login extends AppCompatActivity {
         if(myData.UserLogin(employeeID, password))
         {
             String welcomeMessage;
-            if (myData.getIsAdmin() == 1) {
-                welcomeMessage = "Welcome Admin " + myData.getFullName() + "!";
-            } else {
-                welcomeMessage = "Welcome " + myData.getFullName() + "!";
+
+            // Check if user is ADMIN001
+            if (employeeID.equals("ADMIN001")) {
+                welcomeMessage = "Welcome System Administrator!";
+                myMessageWindow("Admin Login Success", welcomeMessage);
+
+                // Redirect to admin page (using slideshow fragment as admin page)
+                Intent intent = new Intent(Login.this, MainActivity.class);
+
+                // Pass admin data to MainActivity
+                intent.putExtra("EMPLOYEE_ID", myData.getEmployeeID());
+                intent.putExtra("EMPLOYEE_NAME", myData.getFullName());
+                intent.putExtra("IS_ADMIN", myData.getIsAdmin());
+                intent.putExtra("FIRST_NAME", myData.getFirstName());
+                intent.putExtra("LAST_NAME", myData.getLastName());
+                intent.putExtra("REDIRECT_TO_ADMIN", true); // Flag to redirect to admin page
+
+                startActivity(intent);
+                finish(); // Close login activity so user can't go back
             }
+            else
+            {
+                welcomeMessage = "Welcome " + myData.getFullName() + "!";
+                myMessageWindow("Login Success", welcomeMessage);
 
-            myMessageWindow("Login Success", welcomeMessage);
+                // Navigate to MainActivity (navigation drawer)
+                Intent intent = new Intent(Login.this, MainActivity.class);
 
-            // Navigate to MainActivity (navigation drawer)
-            Intent intent = new Intent(Login.this, MainActivity.class);
+                // Pass user data to MainActivity
+                intent.putExtra("EMPLOYEE_ID", myData.getEmployeeID());
+                intent.putExtra("EMPLOYEE_NAME", myData.getFullName());
+                intent.putExtra("IS_ADMIN", myData.getIsAdmin());
+                intent.putExtra("FIRST_NAME", myData.getFirstName());
+                intent.putExtra("LAST_NAME", myData.getLastName());
 
-            // Pass user data to MainActivity
-            intent.putExtra("EMPLOYEE_ID", myData.getEmployeeID());
-            intent.putExtra("EMPLOYEE_NAME", myData.getFullName());
-            intent.putExtra("IS_ADMIN", myData.getIsAdmin());
-            intent.putExtra("FIRST_NAME", myData.getFirstName());
-            intent.putExtra("LAST_NAME", myData.getLastName());
-
-            startActivity(intent);
-            finish(); // Close login activity
+                startActivity(intent);
+                finish(); // Close login activity so user can't go back
+            }
         }
         else
         {
