@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -12,20 +13,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ABCCreditLoanSystem.db";
     public static final int DATABASE_VERSION = 1;
 
-
     // User Table
     public static final String TABLE_USERS = "user_table";
     public static final String COL_USER_ID = "ID";
     public static final String COL_EMPLOYEE_ID = "EmployeeID";
-    public static final String COL_EMPLOYEE_NAME = "EmployeeName";
+    public static final String COL_FIRST_NAME = "FirstName";
+    public static final String COL_MIDDLE_INITIAL = "MiddleInitial";
+    public static final String COL_LAST_NAME = "LastName";
     public static final String COL_DATE_HIRED = "DateHired";
     public static final String COL_PASSWORD = "Password";
     public static final String COL_IS_ADMIN = "IsAdmin";
 
-
     // Loan Applications Table
     public static final String TABLE_LOANS = "loan_table";
     public static final String COL_LOAN_ID = "LoanID";
+    public static final String COL_EMPLOYEE_ID_REF = "EmployeeID";
     public static final String COL_LOAN_TYPE = "LoanType";
     public static final String COL_LOAN_AMOUNT = "LoanAmount";
     public static final String COL_MONTHS_TO_PAY = "MonthsToPay";
@@ -38,7 +40,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Properties for current record
     private String employeeID;
-    private String employeeName;
+    private String firstName;
+    private String middleInitial;
+    private String lastName;
     private String dateHired;
     private String password;
     private int isAdmin;
@@ -53,15 +57,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String loanStatus;
     private String applicationDate;
 
-
-    // Database Definition Methods
     private String UserTableDefinition()
     {
         String dbDefinition;
         dbDefinition = "CREATE TABLE " + TABLE_USERS + "(" +
                 COL_USER_ID + " integer PRIMARY KEY AUTOINCREMENT, " +
                 COL_EMPLOYEE_ID + " Text UNIQUE, " +
-                COL_EMPLOYEE_NAME + " Text, " +
+                COL_FIRST_NAME + " Text, " +
+                COL_MIDDLE_INITIAL + " Text, " +
+                COL_LAST_NAME + " Text, " +
                 COL_DATE_HIRED + " Text, " +
                 COL_PASSWORD + " Text, " +
                 COL_IS_ADMIN + " Integer)";
@@ -73,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String dbDefinition;
         dbDefinition = "CREATE TABLE " + TABLE_LOANS + "(" +
                 COL_LOAN_ID + " integer PRIMARY KEY AUTOINCREMENT, " +
-                COL_EMPLOYEE_ID + " Text, " +
+                COL_EMPLOYEE_ID_REF + " Text, " +
                 COL_LOAN_TYPE + " Text, " +
                 COL_LOAN_AMOUNT + " Real, " +
                 COL_MONTHS_TO_PAY + " Integer, " +
@@ -81,9 +85,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_SERVICE_CHARGE + " Real, " +
                 COL_TOTAL_AMOUNT + " Real, " +
                 COL_MONTHLY_AMORTIZATION + " Real, " +
-                COL_LOAN_STATUS + " Text, " +
+                COL_LOAN_STATUS + " Text DEFAULT 'Pending', " +
                 COL_APPLICATION_DATE + " Text, " +
-                "FOREIGN KEY(" + COL_EMPLOYEE_ID + ") REFERENCES " + TABLE_USERS + "(" + COL_EMPLOYEE_ID + "))";
+                "FOREIGN KEY(" + COL_EMPLOYEE_ID_REF + ") REFERENCES " + TABLE_USERS + "(" + COL_EMPLOYEE_ID + "))";
         return dbDefinition;
     }
 
@@ -108,25 +112,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    // Generate Employee ID: Initial + 5 digit random numbers
+    public String GenerateEmployeeID(String firstName, String lastName) {
+        String initial = "";
+        if (!firstName.isEmpty()) initial += firstName.substring(0, 1).toUpperCase();
+        if (!lastName.isEmpty()) initial += lastName.substring(0, 1).toUpperCase();
+
+        Random random = new Random();
+        int randomNumber = random.nextInt(90000) + 10000; // 10000-99999
+        return initial + randomNumber;
+    }
+
     // Create default admin account
     private void CreateDefaultAdmin(SQLiteDatabase db)
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_EMPLOYEE_ID, "ADMIN001");
-        contentValues.put(COL_EMPLOYEE_NAME, "System Administrator");
+        contentValues.put(COL_FIRST_NAME, "System");
+        contentValues.put(COL_MIDDLE_INITIAL, "A");
+        contentValues.put(COL_LAST_NAME, "Administrator");
         contentValues.put(COL_DATE_HIRED, "2025-01-01");
         contentValues.put(COL_PASSWORD, "admin123");
         contentValues.put(COL_IS_ADMIN, 1);
         db.insert(TABLE_USERS, null, contentValues);
     }
 
-    // User Registration
-    public boolean RegisterUser(String empID, String empName, String dateHired, String password, int isAdmin)
+    // User Registration with separate name fields
+    public boolean RegisterUser(String empID, String firstName, String middleInitial, String lastName,
+                                String dateHired, String password, int isAdmin)
     {
         SQLiteDatabase saveCmd = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_EMPLOYEE_ID, empID);
-        contentValues.put(COL_EMPLOYEE_NAME, empName);
+        contentValues.put(COL_FIRST_NAME, firstName);
+        contentValues.put(COL_MIDDLE_INITIAL, middleInitial);
+        contentValues.put(COL_LAST_NAME, lastName);
         contentValues.put(COL_DATE_HIRED, dateHired);
         contentValues.put(COL_PASSWORD, password);
         contentValues.put(COL_IS_ADMIN, isAdmin);
@@ -146,10 +166,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (resultSet.moveToNext())
         {
             employeeID = resultSet.getString(1);
-            employeeName = resultSet.getString(2);
-            dateHired = resultSet.getString(3);
-            this.password = resultSet.getString(4);
-            isAdmin = resultSet.getInt(5);
+            firstName = resultSet.getString(2);
+            middleInitial = resultSet.getString(3);
+            lastName = resultSet.getString(4);
+            dateHired = resultSet.getString(5);
+            this.password = resultSet.getString(6);
+            isAdmin = resultSet.getInt(7);
             found = true;
             break;
         }
@@ -196,27 +218,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    // View User(Specific user) Loan Applications
+    // View User's Loan Applications
     public Cursor ViewUserLoans(String empID)
     {
-        SQLiteDatabase viewCmd = this.getWritableDatabase();
+        SQLiteDatabase viewCmd = this.getReadableDatabase();
         Cursor resultSet;
-        resultSet = viewCmd.rawQuery("SELECT " + COL_LOAN_TYPE + ", " + COL_LOAN_AMOUNT + ", " +
+        resultSet = viewCmd.rawQuery("SELECT " + COL_LOAN_ID + ", " + COL_LOAN_TYPE + ", " + COL_LOAN_AMOUNT + ", " +
                 COL_MONTHS_TO_PAY + ", " + COL_LOAN_STATUS + ", " +
                 COL_APPLICATION_DATE + " FROM " + TABLE_LOANS +
-                " WHERE " + COL_EMPLOYEE_ID + " = ?", new String[] {empID});
+                " WHERE " + COL_EMPLOYEE_ID + " = ? ORDER BY " + COL_LOAN_ID + " DESC", new String[] {empID});
         return resultSet;
     }
 
-    // View All Loan Applications
+    // View All Loan Applications (Admin Only)
     public Cursor ViewAllLoans()
     {
-        SQLiteDatabase viewCmd = this.getWritableDatabase();
+        SQLiteDatabase viewCmd = this.getReadableDatabase();
         Cursor resultSet;
         resultSet = viewCmd.rawQuery("SELECT " + COL_LOAN_ID + ", " + COL_EMPLOYEE_ID + ", " +
                 COL_LOAN_TYPE + ", " + COL_LOAN_AMOUNT + ", " +
                 COL_MONTHS_TO_PAY + ", " + COL_LOAN_STATUS + ", " +
-                COL_APPLICATION_DATE + " FROM " + TABLE_LOANS, null);
+                COL_APPLICATION_DATE + " FROM " + TABLE_LOANS +
+                " ORDER BY " + COL_LOAN_ID + " DESC", null);
         return resultSet;
     }
 
@@ -246,7 +269,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return found;
     }
 
-    // Update Loan Status (Approve/Disapprove)
+    // Update Loan Status (Approve/Disapprove) - Admin Only
     public boolean UpdateLoanStatus(int loanID, String status)
     {
         SQLiteDatabase updateCmd = this.getWritableDatabase();
@@ -267,14 +290,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return deletedRecord;
     }
 
+    // Get User Details by ID
+    public boolean GetUserDetails(String empID)
+    {
+        boolean found = false;
+        SQLiteDatabase readCmd = this.getReadableDatabase();
+        Cursor resultSet;
+        resultSet = readCmd.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + COL_EMPLOYEE_ID + " = ?",
+                new String[] {empID});
+        while (resultSet.moveToNext())
+        {
+            employeeID = resultSet.getString(1);
+            firstName = resultSet.getString(2);
+            middleInitial = resultSet.getString(3);
+            lastName = resultSet.getString(4);
+            dateHired = resultSet.getString(5);
+            password = resultSet.getString(6);
+            isAdmin = resultSet.getInt(7);
+            found = true;
+            break;
+        }
+        resultSet.close();
+        return found;
+    }
 
     // Getter Methods
     public String getEmployeeID() {
         return employeeID;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleInitial() {
+        return middleInitial;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFullName() {
+        if (middleInitial != null && !middleInitial.isEmpty()) {
+            return firstName + " " + middleInitial + ". " + lastName;
+        } else {
+            return firstName + " " + lastName;
+        }
     }
 
     public String getDateHired() {
@@ -330,8 +392,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.employeeID = employeeID;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setMiddleInitial(String middleInitial) {
+        this.middleInitial = middleInitial;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setDateHired(String dateHired) {
