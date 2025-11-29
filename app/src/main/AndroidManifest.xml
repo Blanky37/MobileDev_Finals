@@ -14,19 +14,23 @@
         <activity
             android:name=".Regisration"
             android:exported="false" />
+
+        <!-- Login as main activity -->
         <activity
             android:name=".Login"
-            android:exported="false" />
+            android:exported="true"
+            android:theme="@style/Theme.Aquino_Bembo_Finals">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Aquino_Bembo_Finals.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
