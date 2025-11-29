@@ -1,5 +1,6 @@
 package com.example.aquino_bembo_finals;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -25,6 +26,21 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Get user data from Login activity
+        Intent intent = getIntent();
+        if (intent != null) {
+            String employeeId = intent.getStringExtra("EMPLOYEE_ID");
+            String employeeName = intent.getStringExtra("EMPLOYEE_NAME");
+            int isAdmin = intent.getIntExtra("IS_ADMIN", 0);
+            String firstName = intent.getStringExtra("FIRST_NAME");
+            String lastName = intent.getStringExtra("LAST_NAME");
+
+            // Use these values as needed
+            if (isAdmin == 1) {
+                // Enable admin features
+            }
+        }
 
         setSupportActionBar(binding.appBarMain.toolbar);
 

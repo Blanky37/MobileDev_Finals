@@ -151,6 +151,7 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="24dp"
                     android:text="Login"
+                    android:onClick="onClickLogin"
                     android:textSize="16sp"
                     app:cornerRadius="8dp" />
 
@@ -209,6 +210,7 @@
                         android:foreground="?android:attr/selectableItemBackground"
                         android:padding="4dp"
                         android:text="Register Now"
+                        android:onClick="onClickRegisterLink"
                         android:textColor="#3498DB"
                         android:textSize="14sp"
                         android:textStyle="bold" />
