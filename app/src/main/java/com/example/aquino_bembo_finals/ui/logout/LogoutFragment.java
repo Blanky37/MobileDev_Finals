@@ -11,7 +11,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.aquino_bembo_finals.Login;
+import com.example.aquino_bembo_finals.initial.Login;
 import com.example.aquino_bembo_finals.R;
 
 public class LogoutFragment extends Fragment {

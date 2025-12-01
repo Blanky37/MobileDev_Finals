@@ -1,4 +1,4 @@
-package com.example.aquino_bembo_finals;
+package com.example.aquino_bembo_finals.initial;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -15,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.aquino_bembo_finals.DatabaseHelper;
+import com.example.aquino_bembo_finals.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

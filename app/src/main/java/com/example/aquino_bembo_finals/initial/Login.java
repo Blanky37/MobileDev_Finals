@@ -1,4 +1,4 @@
-package com.example.aquino_bembo_finals;
+package com.example.aquino_bembo_finals.initial;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +14,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.aquino_bembo_finals.DatabaseHelper;
+import com.example.aquino_bembo_finals.MainActivity;
+import com.example.aquino_bembo_finals.R;
+import com.example.aquino_bembo_finals.admin.AdminHome;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -112,7 +116,7 @@ public class Login extends AppCompatActivity {
                 myMessageWindow("Admin Login Success", welcomeMessage);
 
                 // Redirect to admin page (using slideshow fragment as admin page)
-                Intent intent = new Intent(Login.this, MainActivity.class);
+                Intent intent = new Intent(Login.this, AdminHome.class);
 
                 // Pass admin data to MainActivity
                 intent.putExtra("EMPLOYEE_ID", myData.getEmployeeID());
