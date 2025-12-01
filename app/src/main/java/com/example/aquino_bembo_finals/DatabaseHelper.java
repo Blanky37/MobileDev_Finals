@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -196,7 +199,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return found;
     }
 
-    // Save Loan Application
+    // Save Loan Application - UPDATED to use MM/dd/yyyy format
     public boolean SaveLoanApplication(String empID, String loanType, double loanAmount,
                                        int monthsToPay, double interestRate, double serviceCharge,
                                        double totalAmount, double monthlyAmort, String status)
@@ -212,7 +215,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_TOTAL_AMOUNT, totalAmount);
         contentValues.put(COL_MONTHLY_AMORTIZATION, monthlyAmort);
         contentValues.put(COL_LOAN_STATUS, status);
-        contentValues.put(COL_APPLICATION_DATE, String.valueOf(System.currentTimeMillis()));
+
+        // Format application date as MM/dd/yyyy
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+        contentValues.put(COL_APPLICATION_DATE, currentDate);
 
         long result = saveCmd.insert(TABLE_LOANS, null, contentValues);
         return result != -1;

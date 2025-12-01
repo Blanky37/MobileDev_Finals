@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.database.Cursor;
 
 import com.example.aquino_bembo_finals.MainActivity;
 import com.example.aquino_bembo_finals.R;
@@ -36,6 +37,7 @@ public class SpecialLoanFragment extends Fragment {
 
     private String currentEmployeeId;
     private boolean hasAccess = false;
+    private boolean hasPendingLoan = false;
 
     public SpecialLoanFragment() {
         // Required empty public constructor
@@ -72,6 +74,11 @@ public class SpecialLoanFragment extends Fragment {
         // Check if employee has access (5+ years of service)
         checkEmployeeEligibility();
 
+        // Check if user has pending special loan
+        if (hasAccess) {
+            checkPendingLoans();
+        }
+
         // Initialize views
         initializeViews(view);
 
@@ -79,6 +86,26 @@ public class SpecialLoanFragment extends Fragment {
         setupClickListeners();
 
         return view;
+    }
+
+    private void checkPendingLoans() {
+        if (currentEmployeeId == null || currentEmployeeId.isEmpty()) {
+            return;
+        }
+
+        Cursor cursor = databaseHelper.ViewUserLoans(currentEmployeeId);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String loanType = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_LOAN_TYPE));
+                String loanStatus = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_LOAN_STATUS));
+
+                if (loanType.equals("Special Loan") && loanStatus.equals("Pending")) {
+                    hasPendingLoan = true;
+                    break;
+                }
+            }
+            cursor.close();
+        }
     }
 
     private void checkEmployeeEligibility() {
@@ -109,7 +136,7 @@ public class SpecialLoanFragment extends Fragment {
             SimpleDateFormat sdf;
             Date hireDate = null;
 
-            // Try MM/dd/yyyy format first (from phone registration)
+            // Try MM/dd/yyyy format first (from registration)
             try {
                 sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
                 hireDate = sdf.parse(hireDateStr);
@@ -194,18 +221,27 @@ public class SpecialLoanFragment extends Fragment {
         tvResultTotal = view.findViewById(R.id.tv_result_total);
         tvResultMonthly = view.findViewById(R.id.tv_result_monthly);
 
-        // Disable inputs if no access
+        // Disable inputs if no access or has pending loan
         if (!hasAccess) {
             etLoanAmount.setEnabled(false);
             etMonths.setEnabled(false);
             btnCalculate.setEnabled(false);
             btnApply.setEnabled(false);
 
-
+            // Show message that inputs are disabled
 
             // Also set text to show they need eligibility
             etLoanAmount.setText("");
             etMonths.setText("");
+        } else if (hasPendingLoan) {
+            etLoanAmount.setEnabled(false);
+            etMonths.setEnabled(false);
+            btnCalculate.setEnabled(false);
+            btnApply.setEnabled(false);
+
+            showMessage("Pending Application",
+                    "You already have a pending Special Loan application.\n\n" +
+                            "You cannot apply for another Special Loan until your current application is reviewed by the administrator.");
         }
     }
 
@@ -218,6 +254,13 @@ public class SpecialLoanFragment extends Fragment {
                     showMessage("Access Denied", "You are not eligible for Special Loan. This loan type requires 5 or more years of service.");
                     return;
                 }
+                // Check if has pending loan
+                if (hasPendingLoan) {
+                    showMessage("Pending Application",
+                            "You already have a pending Special Loan application.\n\n" +
+                                    "You cannot apply for another Special Loan until your current application is reviewed by the administrator.");
+                    return;
+                }
                 calculateLoan();
             }
         });
@@ -228,6 +271,13 @@ public class SpecialLoanFragment extends Fragment {
                 // Check access before applying
                 if (!hasAccess) {
                     showMessage("Access Denied", "You are not eligible for Special Loan. This loan type requires 5 or more years of service.");
+                    return;
+                }
+                // Check if has pending loan
+                if (hasPendingLoan) {
+                    showMessage("Pending Application",
+                            "You already have a pending Special Loan application.\n\n" +
+                                    "You cannot apply for another Special Loan until your current application is reviewed by the administrator.");
                     return;
                 }
                 applyForLoan();
@@ -330,32 +380,76 @@ public class SpecialLoanFragment extends Fragment {
             return;
         }
 
+        // Calculate again to get all values
+        LoanComputation.SpecialLoanResult result = LoanComputation.calculateSpecialLoan(
+                loanAmount,
+                months,
+                new LoanComputation.LoanErrorListener() {
+                    @Override
+                    public void onLoanError(String title, String message) {
+                        showMessage(title, message);
+                    }
+                }
+        );
+
+        if (result == null) {
+            return;
+        }
+
         // Show confirmation dialog
-        showConfirmationDialog(loanAmount, months);
+        showConfirmationDialog(loanAmount, months, result);
     }
 
-    private void showConfirmationDialog(double loanAmount, int months) {
+    private void showConfirmationDialog(double loanAmount, int months, LoanComputation.SpecialLoanResult result) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(true);
         builder.setTitle("Confirm Loan Application");
         builder.setMessage(String.format("Are you sure you want to apply for this Special Loan?\n\n" +
                         "Loan Amount: %s\n" +
                         "Duration: %d months\n" +
+                        "Interest Rate: %s\n" +
+                        "Interest: %s\n" +
+                        "Total Amount: %s\n" +
+                        "Monthly Payment: %s\n\n" +
                         "This application will be submitted for review.",
                 LoanComputation.formatCurrency(loanAmount),
-                months));
+                months,
+                LoanComputation.formatPercent(result.interestRate),
+                LoanComputation.formatCurrency(result.interest),
+                LoanComputation.formatCurrency(result.totalAmount),
+                LoanComputation.formatCurrency(result.monthlyPayment)));
 
         builder.setPositiveButton("Yes, Apply", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // TODO: Add database submission logic here
-                showMessage("Application Submitted",
-                        "Your Special Loan application has been submitted successfully!\n\n" +
-                                "Status: Pending Review\n" +
-                                "You will be notified once your application is reviewed by the administrator.");
+                // Save loan application to database
+                boolean isSaved = databaseHelper.SaveLoanApplication(
+                        currentEmployeeId,
+                        "Special Loan",
+                        result.loanAmount,
+                        result.months,
+                        result.interestRate,
+                        0.00, // No service charge for special loan
+                        result.totalAmount,
+                        result.monthlyPayment,
+                        "Pending"
+                );
 
-                // Reset form after submission
-                resetForm();
+                if (isSaved) {
+                    showMessage("Application Submitted",
+                            "Your Special Loan application has been submitted successfully!\n\n" +
+                                    "Status: Pending Review\n" +
+                                    "You will be notified once your application is reviewed by the administrator.");
+
+                    // Reset form after submission
+                    resetForm();
+                    // Update pending loan status
+                    hasPendingLoan = true;
+                    disableForm();
+                } else {
+                    showMessage("Submission Failed",
+                            "Failed to submit loan application. Please try again.");
+                }
             }
         });
 
@@ -367,6 +461,13 @@ public class SpecialLoanFragment extends Fragment {
         });
 
         builder.show();
+    }
+
+    private void disableForm() {
+        etLoanAmount.setEnabled(false);
+        etMonths.setEnabled(false);
+        btnCalculate.setEnabled(false);
+        btnApply.setEnabled(false);
     }
 
     private void resetForm() {
