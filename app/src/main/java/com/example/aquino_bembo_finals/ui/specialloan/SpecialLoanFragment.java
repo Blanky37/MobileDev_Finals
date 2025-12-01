@@ -8,10 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.aquino_bembo_finals.MainActivity;
 import com.example.aquino_bembo_finals.R;
 import com.example.aquino_bembo_finals.LoanComputation;
+import com.example.aquino_bembo_finals.DatabaseHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,13 +28,25 @@ public class SpecialLoanFragment extends Fragment {
     private TextInputEditText etLoanAmount, etMonths;
     private MaterialButton btnCalculate, btnApply;
     private View cardResults;
+    private DatabaseHelper databaseHelper;
 
     // Result TextViews
     private android.widget.TextView tvResultLoanAmount, tvResultMonths, tvResultInterestRate,
             tvResultInterest, tvResultTotal, tvResultMonthly;
 
+    private String currentEmployeeId;
+    private boolean hasAccess = false;
+
     public SpecialLoanFragment() {
         // Required empty public constructor
+    }
+
+    public static SpecialLoanFragment newInstance(String employeeId) {
+        SpecialLoanFragment fragment = new SpecialLoanFragment();
+        Bundle args = new Bundle();
+        args.putString("EMPLOYEE_ID", employeeId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -36,6 +55,23 @@ public class SpecialLoanFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_special_loan, container, false);
 
+        // Initialize database helper
+        databaseHelper = new DatabaseHelper(getContext());
+
+        // Get current employee ID from arguments
+        if (getArguments() != null) {
+            currentEmployeeId = getArguments().getString("EMPLOYEE_ID", "");
+        }
+
+        // If not from arguments, try to get from MainActivity
+        if ((currentEmployeeId == null || currentEmployeeId.isEmpty()) && getActivity() != null) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            currentEmployeeId = mainActivity.getCurrentEmployeeId();
+        }
+
+        // Check if employee has access (5+ years of service)
+        checkEmployeeEligibility();
+
         // Initialize views
         initializeViews(view);
 
@@ -43,6 +79,101 @@ public class SpecialLoanFragment extends Fragment {
         setupClickListeners();
 
         return view;
+    }
+
+    private void checkEmployeeEligibility() {
+        if (currentEmployeeId == null || currentEmployeeId.isEmpty()) {
+            showMessage("Access Denied", "Employee information not found. Please log in again.");
+            hasAccess = false;
+            return;
+        }
+
+        // Get employee details
+        boolean found = databaseHelper.GetUserDetails(currentEmployeeId);
+        if (!found) {
+            showMessage("Access Denied", "Employee record not found.");
+            hasAccess = false;
+            return;
+        }
+
+        // Get hire date
+        String hireDateStr = databaseHelper.getDateHired();
+        if (hireDateStr == null || hireDateStr.isEmpty()) {
+            showMessage("Access Denied", "Hire date information is missing.");
+            hasAccess = false;
+            return;
+        }
+
+        try {
+            // Parse hire date - try multiple formats
+            SimpleDateFormat sdf;
+            Date hireDate = null;
+
+            // Try MM/dd/yyyy format first (from phone registration)
+            try {
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+                hireDate = sdf.parse(hireDateStr);
+            } catch (Exception e1) {
+                // If that fails, try yyyy-MM-dd format
+                try {
+                    sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    hireDate = sdf.parse(hireDateStr);
+                } catch (Exception e2) {
+                    // Try other possible formats
+                    try {
+                        sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        hireDate = sdf.parse(hireDateStr);
+                    } catch (Exception e3) {
+                        // Last try with default locale
+                        sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+                        hireDate = sdf.parse(hireDateStr);
+                    }
+                }
+            }
+
+            if (hireDate == null) {
+                showMessage("Access Denied", "Invalid hire date format: " + hireDateStr);
+                hasAccess = false;
+                return;
+            }
+
+            // Calculate years of service
+            Calendar hireCal = Calendar.getInstance();
+            hireCal.setTime(hireDate);
+
+            Calendar currentCal = Calendar.getInstance();
+
+            int yearsOfService = currentCal.get(Calendar.YEAR) - hireCal.get(Calendar.YEAR);
+
+            // Adjust if haven't reached the hire month/day yet this year
+            if (currentCal.get(Calendar.MONTH) < hireCal.get(Calendar.MONTH) ||
+                    (currentCal.get(Calendar.MONTH) == hireCal.get(Calendar.MONTH) &&
+                            currentCal.get(Calendar.DAY_OF_MONTH) < hireCal.get(Calendar.DAY_OF_MONTH))) {
+                yearsOfService--;
+            }
+
+            // Check if employee has 5 or more years of service
+            if (yearsOfService >= 5) {
+                hasAccess = true;
+                // Show welcome message for eligible employees
+                showMessage("Eligibility Verified",
+                        "Welcome " + databaseHelper.getFullName() + "!\n" +
+                                "You have " + yearsOfService + " years of service.\n" +
+                                "You are eligible for Special Loan.");
+            } else {
+                hasAccess = false;
+                showMessage("Access Denied",
+                        "Special Loan is only available to employees with 5 or more years of service.\n\n" +
+                                "Your years of service: " + yearsOfService + " years\n" +
+                                "Required: 5 years or more\n\n" +
+                                "Please consider other loan types.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showMessage("Error", "Unable to verify eligibility. Please try again. Error: " + e.getMessage());
+            hasAccess = false;
+        }
     }
 
     private void initializeViews(View view) {
@@ -62,12 +193,31 @@ public class SpecialLoanFragment extends Fragment {
         tvResultInterest = view.findViewById(R.id.tv_result_interest);
         tvResultTotal = view.findViewById(R.id.tv_result_total);
         tvResultMonthly = view.findViewById(R.id.tv_result_monthly);
+
+        // Disable inputs if no access
+        if (!hasAccess) {
+            etLoanAmount.setEnabled(false);
+            etMonths.setEnabled(false);
+            btnCalculate.setEnabled(false);
+            btnApply.setEnabled(false);
+
+
+
+            // Also set text to show they need eligibility
+            etLoanAmount.setText("");
+            etMonths.setText("");
+        }
     }
 
     private void setupClickListeners() {
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check access before calculating
+                if (!hasAccess) {
+                    showMessage("Access Denied", "You are not eligible for Special Loan. This loan type requires 5 or more years of service.");
+                    return;
+                }
                 calculateLoan();
             }
         });
@@ -75,6 +225,11 @@ public class SpecialLoanFragment extends Fragment {
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check access before applying
+                if (!hasAccess) {
+                    showMessage("Access Denied", "You are not eligible for Special Loan. This loan type requires 5 or more years of service.");
+                    return;
+                }
                 applyForLoan();
             }
         });
@@ -243,5 +398,13 @@ public class SpecialLoanFragment extends Fragment {
             }
         });
         builder.show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (databaseHelper != null) {
+            databaseHelper.close();
+        }
     }
 }
