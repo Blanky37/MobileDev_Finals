@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private String currentEmployeeId;
     private String currentEmployeeName;
-    private int currentIsAdmin;
-    private boolean redirectToAdmin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +36,6 @@ public class MainActivity extends AppCompatActivity {
         if (intent != null) {
             currentEmployeeId = intent.getStringExtra("EMPLOYEE_ID");
             currentEmployeeName = intent.getStringExtra("EMPLOYEE_NAME");
-            currentIsAdmin = intent.getIntExtra("IS_ADMIN", 0);
-            redirectToAdmin = intent.getBooleanExtra("REDIRECT_TO_ADMIN", false);
-
-            // You can use these values as needed
-            if (currentIsAdmin == 1) {
-                // Enable admin features
-            }
         }
 
         setSupportActionBar(binding.appBarMain.toolbar);
@@ -56,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         updateNavigationHeader();
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_emergencyloan, R.id.nav_specialloan, R.id.nav_regularloan,  R.id.nav_slideshow, R.id.nav_logout)
+                R.id.nav_home, R.id.nav_emergencyloan, R.id.nav_specialloan, R.id.nav_regularloan, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -64,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Redirect to admin page if flag is set (for ADMIN001)
-        if (redirectToAdmin) {
-            // Navigate to slideshow fragment (admin dashboard)
-            navController.navigate(R.id.nav_slideshow);
-        }
     }
 
     private void updateNavigationHeader() {
