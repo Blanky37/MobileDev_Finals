@@ -160,6 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:onClick="onClickToPendingApplications"
                 android:padding="20dp">
 
                 <ImageView
@@ -222,6 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:onClick="onClickToAllApplications"
                 android:padding="20dp">
 
                 <ImageView
@@ -284,7 +286,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:onClick="onClickToAllRecords">
 
                 <ImageView
                     android:layout_width="48dp"
