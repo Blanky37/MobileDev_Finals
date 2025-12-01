@@ -40,7 +40,6 @@ public class Login extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize UI components
         txtEmployeeID = (TextInputEditText) findViewById(R.id.et_employee_id);
         txtPassword = (TextInputEditText) findViewById(R.id.et_password);
         tilEmployeeID = (TextInputLayout) findViewById(R.id.til_employee_id);
@@ -49,7 +48,6 @@ public class Login extends AppCompatActivity {
         tvRegisterLink = (TextView) findViewById(R.id.tv_register_link);
         tvForgotPassword = (TextView) findViewById(R.id.tv_forgot_password);
 
-        // Set up click listeners
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +64,6 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    //Message Window Method (exactly like professor's)
     public void myMessageWindow(String title,String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -81,7 +78,6 @@ public class Login extends AppCompatActivity {
         builder.show();
     }
 
-    // Login Method (following professor's onClick pattern)
     public void onClickLogin(View view) {
         // Clear previous errors
         tilEmployeeID.setError(null);
@@ -90,7 +86,7 @@ public class Login extends AppCompatActivity {
         String employeeID = txtEmployeeID.getText().toString().trim();
         String password = txtPassword.getText().toString().trim();
 
-        // Validate inputs
+        // Field Validation
         if(employeeID.isEmpty())
         {
             tilEmployeeID.setError("Employee ID is required");
@@ -127,7 +123,7 @@ public class Login extends AppCompatActivity {
                 intent.putExtra("REDIRECT_TO_ADMIN", true); // Flag to redirect to admin page
 
                 startActivity(intent);
-                finish(); // Close login activity so user can't go back
+                finish();
             }
             else
             {
@@ -145,7 +141,7 @@ public class Login extends AppCompatActivity {
                 intent.putExtra("LAST_NAME", myData.getLastName());
 
                 startActivity(intent);
-                finish(); // Close login activity so user can't go back
+                finish();
             }
         }
         else

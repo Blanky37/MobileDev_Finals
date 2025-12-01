@@ -116,6 +116,8 @@ public class Regisration extends AppCompatActivity {
     }
 
     public void onClickRegister(View view) {
+
+        // Field Validation
         tilFirstName.setError(null);
         tilMiddleInitial.setError(null);
         tilLastName.setError(null);

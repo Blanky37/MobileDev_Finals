@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // Update the navigation header with user info
         updateNavigationHeader();
 
+        // Set up the navigation drawer
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_emergencyloan, R.id.nav_specialloan, R.id.nav_regularloan, R.id.nav_logout)
                 .setOpenableLayout(drawer)
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Update the navigation header with user info
     private void updateNavigationHeader() {
         NavigationView navigationView = binding.navView;
         View headerView = navigationView.getHeaderView(0);
@@ -79,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
+    // Handle navigation up
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
