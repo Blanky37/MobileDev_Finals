@@ -26,11 +26,11 @@
             android:label="Admin Dashboard" />
         <activity
             android:name=".initial.Regisration"
-            android:exported="false" /> <!-- Login as main activity -->
+            android:exported="false" />
         <activity
             android:name=".initial.Login"
             android:exported="true"
-            android:theme="@style/Theme.Aquino_Bembo_Finals">
+            android:theme="@style/Theme.Aquino_Bembo_Finals"> <!-- Login as main activity -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
