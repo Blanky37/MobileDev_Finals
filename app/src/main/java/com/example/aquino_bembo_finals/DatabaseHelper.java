@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -212,7 +215,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_TOTAL_AMOUNT, totalAmount);
         contentValues.put(COL_MONTHLY_AMORTIZATION, monthlyAmort);
         contentValues.put(COL_LOAN_STATUS, status);
-        contentValues.put(COL_APPLICATION_DATE, String.valueOf(System.currentTimeMillis()));
+
+        // Format application date as MM/dd/yyyy
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+        contentValues.put(COL_APPLICATION_DATE, currentDate);
 
         long result = saveCmd.insert(TABLE_LOANS, null, contentValues);
         return result != -1;
@@ -243,31 +250,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return resultSet;
     }
 
-    // Search Loan Application by ID
-    public boolean SearchLoanByID(int loanID)
-    {
-        boolean found = false;
-        SQLiteDatabase searchCmd = this.getReadableDatabase();
-        Cursor cursorSet;
-        cursorSet = searchCmd.rawQuery("SELECT * FROM " + TABLE_LOANS + " WHERE " + COL_LOAN_ID + " = ?",
-                new String[] {String.valueOf(loanID)});
-        while (cursorSet.moveToNext()){
-            employeeID = cursorSet.getString(1);
-            loanType = cursorSet.getString(2);
-            loanAmount = cursorSet.getDouble(3);
-            monthsToPay = cursorSet.getInt(4);
-            interestRate = cursorSet.getDouble(5);
-            serviceCharge = cursorSet.getDouble(6);
-            totalAmount = cursorSet.getDouble(7);
-            monthlyAmortization = cursorSet.getDouble(8);
-            loanStatus = cursorSet.getString(9);
-            applicationDate = cursorSet.getString(10);
-            found = true;
-            break;
-        }
-        cursorSet.close();
-        return found;
-    }
 
     // Update Loan Status (Approve/Disapprove)
     public boolean UpdateLoanStatus(int loanID, String status)
