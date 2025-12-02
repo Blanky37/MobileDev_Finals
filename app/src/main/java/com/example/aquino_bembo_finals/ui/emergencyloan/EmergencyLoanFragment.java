@@ -29,7 +29,6 @@ public class EmergencyLoanFragment extends Fragment {
     private String currentEmployeeId;
     private boolean hasPendingLoan = false;
 
-    // Result TextViews
     private android.widget.TextView tvResultLoanAmount, tvResultServiceCharge, tvResultInterest,
             tvResultTotal, tvResultMonthly;
     private android.widget.LinearLayout layoutInterest, layoutMonthly;
@@ -53,13 +52,10 @@ public class EmergencyLoanFragment extends Fragment {
             currentEmployeeId = mainActivity.getCurrentEmployeeId();
         }
 
-        // Check if user has pending emergency loan
         checkPendingLoans();
 
-        // Initialize views
         initializeViews(view);
 
-        // Set up click listeners
         setupClickListeners();
 
         return view;
@@ -86,15 +82,12 @@ public class EmergencyLoanFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        // Input fields
         etLoanAmount = view.findViewById(R.id.et_loan_amount);
         rgPaymentOption = view.findViewById(R.id.rg_payment_option);
 
-        // Buttons
         btnCalculate = view.findViewById(R.id.btn_calculate);
         btnApply = view.findViewById(R.id.btn_apply);
 
-        // Results card and TextViews
         cardResults = view.findViewById(R.id.card_results);
         tvResultLoanAmount = view.findViewById(R.id.tv_result_loan_amount);
         tvResultServiceCharge = view.findViewById(R.id.tv_result_service_charge);
@@ -102,11 +95,9 @@ public class EmergencyLoanFragment extends Fragment {
         tvResultTotal = view.findViewById(R.id.tv_result_total);
         tvResultMonthly = view.findViewById(R.id.tv_result_monthly);
 
-        // Layouts
         layoutInterest = view.findViewById(R.id.layout_interest);
         layoutMonthly = view.findViewById(R.id.layout_monthly);
 
-        // Disable inputs if has pending loan
         if (hasPendingLoan) {
             etLoanAmount.setEnabled(false);
             rgPaymentOption.setEnabled(false);
@@ -122,7 +113,6 @@ public class EmergencyLoanFragment extends Fragment {
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Check if has pending loan
                 if (hasPendingLoan) {
                     showMessage("Pending Application",
                             "You already have a pending Emergency Loan application.\n\n" +
@@ -136,7 +126,6 @@ public class EmergencyLoanFragment extends Fragment {
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Check if has pending loan
                 if (hasPendingLoan) {
                     showMessage("Pending Application",
                             "You already have a pending Emergency Loan application.\n\n" +
@@ -150,7 +139,6 @@ public class EmergencyLoanFragment extends Fragment {
 
     private void calculateLoan() {
         try {
-            // Get loan amount from input
             String amountStr = etLoanAmount.getText().toString().trim();
             if (amountStr.isEmpty()) {
                 showMessage("Input Required", "Please enter loan amount");
@@ -160,11 +148,10 @@ public class EmergencyLoanFragment extends Fragment {
 
             double loanAmount = Double.parseDouble(amountStr);
 
-            // Get payment option
             int selectedId = rgPaymentOption.getCheckedRadioButtonId();
             boolean isCashPayment = (selectedId == R.id.rb_cash);
 
-            // Perform calculation
+            // Do calculation
             LoanComputation.EmergencyLoanResult result = LoanComputation.calculateEmergencyLoan(
                     loanAmount,
                     isCashPayment,
@@ -182,10 +169,8 @@ public class EmergencyLoanFragment extends Fragment {
                 return;
             }
 
-            // Update UI with results
             updateResultsUI(result);
 
-            // Show results card
             cardResults.setVisibility(View.VISIBLE);
 
         } catch (NumberFormatException e) {
@@ -212,12 +197,10 @@ public class EmergencyLoanFragment extends Fragment {
 
         // Show/hide interest and monthly payment based on payment option
         if (result.isCashPayment) {
-            // For cash payment, hide interest and monthly payment
             layoutInterest.setVisibility(View.GONE);
             layoutMonthly.setVisibility(View.GONE);
             tvResultMonthly.setText("N/A");
         } else {
-            // For installment, show interest and monthly payment
             layoutInterest.setVisibility(View.VISIBLE);
             layoutMonthly.setVisibility(View.VISIBLE);
             tvResultMonthly.setText(LoanComputation.formatCurrency(result.monthlyPayment));
@@ -262,7 +245,6 @@ public class EmergencyLoanFragment extends Fragment {
             return;
         }
 
-        // Show confirmation dialog with calculated values
         showConfirmationDialog(loanAmount, paymentOption, result);
     }
 
@@ -286,13 +268,12 @@ public class EmergencyLoanFragment extends Fragment {
         builder.setPositiveButton("Yes, Apply", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Save loan application to database
                 boolean isSaved = databaseHelper.SaveLoanApplication(
                         currentEmployeeId,
                         "Emergency Loan",
                         result.loanAmount,
                         result.months,
-                        result.isCashPayment ? 0.00 : 0.006, // Interest rate: 0% for cash, 0.6% for installment
+                        result.isCashPayment ? 0.00 : 0.006,
                         result.serviceCharge,
                         result.totalPayment,
                         result.monthlyPayment,
@@ -305,7 +286,6 @@ public class EmergencyLoanFragment extends Fragment {
                                     "Status: Pending Review\n" +
                                     "You will be notified once your application is reviewed by the administrator.");
 
-                    // Reset form after submission
                     resetForm();
                     // Update pending loan status
                     hasPendingLoan = true;
@@ -335,23 +315,18 @@ public class EmergencyLoanFragment extends Fragment {
     }
 
     private void resetForm() {
-        // Clear input field
         etLoanAmount.setText("");
 
-        // Reset to default radio button (installment)
         rgPaymentOption.check(R.id.rb_installment);
 
-        // Hide results card
         cardResults.setVisibility(View.GONE);
 
-        // Reset results display
         tvResultLoanAmount.setText("₱0.00");
         tvResultServiceCharge.setText("₱0.00");
         tvResultInterest.setText("₱0.00");
         tvResultTotal.setText("₱0.00");
         tvResultMonthly.setText("₱0.00");
 
-        // Show interest and monthly layouts
         layoutInterest.setVisibility(View.VISIBLE);
         layoutMonthly.setVisibility(View.VISIBLE);
     }

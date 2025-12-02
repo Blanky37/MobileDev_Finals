@@ -54,7 +54,7 @@ public class LoanComputation {
             return null;
         }
 
-        double serviceCharge = loanAmount * 0.01; // 1% service charge
+        double serviceCharge = loanAmount * 0.01;
         double interest = 0;
         double totalPayment;
         double monthlyPayment = 0;
@@ -65,7 +65,7 @@ public class LoanComputation {
             totalPayment = loanAmount + serviceCharge;
         } else {
             // Payable in 6 months: (Loan Amount + Service Charge + Interest) / 6
-            interest = loanAmount * 0.006; // 0.60% interest
+            interest = loanAmount * 0.006;
             totalPayment = loanAmount + serviceCharge + interest;
             monthlyPayment = totalPayment / months;
         }
@@ -132,16 +132,12 @@ public class LoanComputation {
             return null;
         }
 
-        // Determine interest rate based on months
         double interestRate = getSpecialLoanInterestRate(months);
 
-        // Calculate interest: Loan Amount * number of months * Interest rate
         double interest = loanAmount * months * interestRate;
 
-        // Total Amount = Loan Amount + Interest
         double totalAmount = loanAmount + interest;
 
-        // Monthly Amortization = Total Amount / Number of Months
         double monthlyPayment = totalAmount / months;
 
         return new SpecialLoanResult(loanAmount, months, interestRate, interest, totalAmount, monthlyPayment);
@@ -149,13 +145,13 @@ public class LoanComputation {
 
     private static double getSpecialLoanInterestRate(int months) {
         if (months >= 1 && months <= 6) {
-            return 0.006; // 0.60%
+            return 0.006;
         } else if (months >= 7 && months <= 12) {
-            return 0.0062; // 0.62%
+            return 0.0062;
         } else if (months >= 13 && months <= 18) {
-            return 0.0065; // 0.65%
+            return 0.0065;
         } else {
-            return 0.006; // Default rate
+            return 0.006;
         }
     }
 
@@ -213,22 +209,16 @@ public class LoanComputation {
             return null;
         }
 
-        // Loan Amount = Basic Salary * 2.5
         double loanAmount = basicSalary * 2.5;
 
-        // Determine interest rate based on months
         double interestRate = getRegularLoanInterestRate(months);
 
-        // Loan Interest = Loan Amount * number of months * Interest rate
         double interest = loanAmount * months * interestRate;
 
-        // Service Charge = 2% of Loan Amount
         double serviceCharge = loanAmount * 0.02;
 
-        // Take Home Loan = Loan Amount - (Loan Interest + Service Charge)
         double takeHomeLoan = loanAmount - (interest + serviceCharge);
 
-        // Monthly Amortization = Take Home Loan / Number of months
         double monthlyPayment = takeHomeLoan / months;
 
         return new RegularLoanResult(basicSalary, loanAmount, months, interestRate, interest, serviceCharge, takeHomeLoan, monthlyPayment);
@@ -236,17 +226,17 @@ public class LoanComputation {
 
     private static double getRegularLoanInterestRate(int months) {
         if (months >= 1 && months <= 5) {
-            return 0.0062; // 0.62%
+            return 0.0062;
         } else if (months >= 6 && months <= 10) {
-            return 0.0065; // 0.65%
+            return 0.0065;
         } else if (months >= 11 && months <= 15) {
-            return 0.0068; // 0.68%
+            return 0.0068;
         } else if (months >= 16 && months <= 20) {
-            return 0.0075; // 0.75%
+            return 0.0075;
         } else if (months >= 21 && months <= 24) {
-            return 0.0080; // 0.80%
+            return 0.0080;
         } else {
-            return 0.0062; // Default rate
+            return 0.0062;
         }
     }
 

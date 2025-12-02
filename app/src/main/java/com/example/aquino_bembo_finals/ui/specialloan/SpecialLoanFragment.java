@@ -31,7 +31,6 @@ public class SpecialLoanFragment extends Fragment {
     private View cardResults;
     private DatabaseHelper databaseHelper;
 
-    // Result TextViews
     private android.widget.TextView tvResultLoanAmount, tvResultMonths, tvResultInterestRate,
             tvResultInterest, tvResultTotal, tvResultMonthly;
 
@@ -74,15 +73,12 @@ public class SpecialLoanFragment extends Fragment {
         // Check if employee has access (5+ years of service)
         checkEmployeeEligibility();
 
-        // Check if user has pending special loan
         if (hasAccess) {
             checkPendingLoans();
         }
 
-        // Initialize views
         initializeViews(view);
 
-        // Set up click listeners
         setupClickListeners();
 
         return view;
@@ -204,15 +200,12 @@ public class SpecialLoanFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        // Input fields
         etLoanAmount = view.findViewById(R.id.et_loan_amount);
         etMonths = view.findViewById(R.id.et_months);
 
-        // Buttons
         btnCalculate = view.findViewById(R.id.btn_calculate);
         btnApply = view.findViewById(R.id.btn_apply);
 
-        // Results card and TextViews
         cardResults = view.findViewById(R.id.card_results);
         tvResultLoanAmount = view.findViewById(R.id.tv_result_loan_amount);
         tvResultMonths = view.findViewById(R.id.tv_result_months);
@@ -221,16 +214,13 @@ public class SpecialLoanFragment extends Fragment {
         tvResultTotal = view.findViewById(R.id.tv_result_total);
         tvResultMonthly = view.findViewById(R.id.tv_result_monthly);
 
-        // Disable inputs if no access or has pending loan
         if (!hasAccess) {
             etLoanAmount.setEnabled(false);
             etMonths.setEnabled(false);
             btnCalculate.setEnabled(false);
             btnApply.setEnabled(false);
 
-            // Show message that inputs are disabled
-
-            // Also set text to show they need eligibility
+            // Show message that inputs are disabled and set text to show they need eligibility
             etLoanAmount.setText("");
             etMonths.setText("");
         } else if (hasPendingLoan) {
@@ -324,10 +314,8 @@ public class SpecialLoanFragment extends Fragment {
                 return;
             }
 
-            // Update UI with results
             updateResultsUI(result);
 
-            // Show results card
             cardResults.setVisibility(View.VISIBLE);
 
         } catch (NumberFormatException e) {
@@ -396,7 +384,6 @@ public class SpecialLoanFragment extends Fragment {
             return;
         }
 
-        // Show confirmation dialog
         showConfirmationDialog(loanAmount, months, result);
     }
 
@@ -429,7 +416,7 @@ public class SpecialLoanFragment extends Fragment {
                         result.loanAmount,
                         result.months,
                         result.interestRate,
-                        0.00, // No service charge for special loan
+                        0.00,
                         result.totalAmount,
                         result.monthlyPayment,
                         "Pending"
@@ -441,7 +428,6 @@ public class SpecialLoanFragment extends Fragment {
                                     "Status: Pending Review\n" +
                                     "You will be notified once your application is reviewed by the administrator.");
 
-                    // Reset form after submission
                     resetForm();
                     // Update pending loan status
                     hasPendingLoan = true;
@@ -471,14 +457,11 @@ public class SpecialLoanFragment extends Fragment {
     }
 
     private void resetForm() {
-        // Clear input fields
         etLoanAmount.setText("");
         etMonths.setText("");
 
-        // Hide results card
         cardResults.setVisibility(View.GONE);
 
-        // Reset results display
         tvResultLoanAmount.setText("₱0.00");
         tvResultMonths.setText("0");
         tvResultInterestRate.setText("0.00%");

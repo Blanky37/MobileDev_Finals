@@ -134,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_FIRST_NAME, "System");
         contentValues.put(COL_MIDDLE_INITIAL, "A");
         contentValues.put(COL_LAST_NAME, "Administrator");
-        contentValues.put(COL_DATE_HIRED, "2025-01-01");
+        contentValues.put(COL_DATE_HIRED, "01-01-2025");
         contentValues.put(COL_PASSWORD, "admin123");
         contentValues.put(COL_IS_ADMIN, 1);
         db.insert(TABLE_USERS, null, contentValues);
@@ -199,7 +199,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return found;
     }
 
-    // Save Loan Application - UPDATED to use MM/dd/yyyy format
+    // Save Loan Application
     public boolean SaveLoanApplication(String empID, String loanType, double loanAmount,
                                        int monthsToPay, double interestRate, double serviceCharge,
                                        double totalAmount, double monthlyAmort, String status)
@@ -250,31 +250,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return resultSet;
     }
 
-    // Search Loan Application by ID
-    public boolean SearchLoanByID(int loanID)
-    {
-        boolean found = false;
-        SQLiteDatabase searchCmd = this.getReadableDatabase();
-        Cursor cursorSet;
-        cursorSet = searchCmd.rawQuery("SELECT * FROM " + TABLE_LOANS + " WHERE " + COL_LOAN_ID + " = ?",
-                new String[] {String.valueOf(loanID)});
-        while (cursorSet.moveToNext()){
-            employeeID = cursorSet.getString(1);
-            loanType = cursorSet.getString(2);
-            loanAmount = cursorSet.getDouble(3);
-            monthsToPay = cursorSet.getInt(4);
-            interestRate = cursorSet.getDouble(5);
-            serviceCharge = cursorSet.getDouble(6);
-            totalAmount = cursorSet.getDouble(7);
-            monthlyAmortization = cursorSet.getDouble(8);
-            loanStatus = cursorSet.getString(9);
-            applicationDate = cursorSet.getString(10);
-            found = true;
-            break;
-        }
-        cursorSet.close();
-        return found;
-    }
 
     // Update Loan Status (Approve/Disapprove) - Admin Only
     public boolean UpdateLoanStatus(int loanID, String status)
