@@ -12,26 +12,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aquino_Bembo_Finals">
         <activity
-            android:name=".Regisration"
+            android:name=".admin.AllRecordsView"
             android:exported="false" />
-
-        <!-- Login as main activity -->
         <activity
-            android:name=".Login"
+            android:name=".admin.AllApplicationsView"
+            android:exported="false" />
+        <activity
+            android:name=".admin.PendingApplicationsView"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminHome"
+            android:exported="false"
+            android:label="Admin Dashboard" />
+        <activity
+            android:name=".initial.Regisration"
+            android:exported="false" />
+        <activity
+            android:name=".initial.Login"
             android:exported="true"
-            android:theme="@style/Theme.Aquino_Bembo_Finals">
+            android:theme="@style/Theme.Aquino_Bembo_Finals"> <!-- Login as main activity -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Aquino_Bembo_Finals.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Aquino_Bembo_Finals.NoActionBar" />
     </application>
 
 </manifest>

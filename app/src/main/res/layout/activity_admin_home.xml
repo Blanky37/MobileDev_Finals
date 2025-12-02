@@ -2,9 +2,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.slideshow.SlideshowFragment">
+    tools:context=".admin.AdminHome">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -159,6 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:onClick="onClickToPendingApplications"
                 android:padding="20dp">
 
                 <ImageView
@@ -221,6 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:onClick="onClickToAllApplications"
                 android:padding="20dp">
 
                 <ImageView
@@ -283,7 +286,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:onClick="onClickToAllRecords">
 
                 <ImageView
                     android:layout_width="48dp"
