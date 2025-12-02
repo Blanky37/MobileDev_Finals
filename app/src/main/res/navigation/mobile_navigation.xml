@@ -35,4 +35,11 @@
         android:label="Logout"
         tools:layout="@layout/fragment_logout" />
 
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.example.aquino_bembo_finals.ui.history.UserHistory"
+        android:label="Loan History"
+        tools:layout="@layout/fragment_user_history" />
+
+
 </navigation>
