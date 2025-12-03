@@ -65,60 +65,75 @@
                     android:textStyle="bold" />
 
                 <!-- Basic Salary Input -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_basic_salary"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Basic Salary" >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_basic_salary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Your loanable amount will be 2.5x your basic salary"
-                    android:textColor="#7F8C8D"
-                    android:textSize="12sp" />
-
-                <!-- Loanable Amount Display -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_loanable_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone" >
+                    android:layout_marginBottom="16dp" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="12dp">
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Your Loanable Amount:"
-                            android:textColor="#2C3E50"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_loanable_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₱0.00"
-                            android:textColor="#27AE60"
+                            android:text="Your Salary Information"
+                            android:textColor="#2C3E50"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Basic Salary:"
+                                android:textColor="#7F8C8D"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_user_basic_salary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱0.00"
+                                android:textColor="#27AE60"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Loanable Amount (2.5x):"
+                                android:textColor="#7F8C8D"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_loanable_amount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱0.00"
+                                android:textColor="#3498DB"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

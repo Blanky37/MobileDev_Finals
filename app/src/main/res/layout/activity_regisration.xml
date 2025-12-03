@@ -171,6 +171,32 @@
                     android:text="Click to select date"
                     android:textColor="#7F8C8D"
                     android:textSize="12sp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_basic_salary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Basic Salary"
+                    app:boxBackgroundMode="outline"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_menu_gallery">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_basic_salary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Enter your monthly basic salary"
+                    android:textColor="#7F8C8D"
+                    android:textSize="12sp" />
 
                 <!-- Account Security Section -->
                 <TextView

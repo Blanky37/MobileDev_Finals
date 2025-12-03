@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Information
     public static final String DATABASE_NAME = "ABCCreditLoanSystem.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     // User Table
     public static final String TABLE_USERS = "user_table";
@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_MIDDLE_INITIAL = "MiddleInitial";
     public static final String COL_LAST_NAME = "LastName";
     public static final String COL_DATE_HIRED = "DateHired";
+    public static final String COL_BASIC_SALARY = "BasicSalary";
     public static final String COL_PASSWORD = "Password";
     public static final String COL_IS_ADMIN = "IsAdmin";
 
@@ -46,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String firstName;
     private String middleInitial;
     private String lastName;
+    private double basicSalary;
     private String dateHired;
     private String password;
     private int isAdmin;
@@ -70,6 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_MIDDLE_INITIAL + " Text, " +
                 COL_LAST_NAME + " Text, " +
                 COL_DATE_HIRED + " Text, " +
+                COL_BASIC_SALARY + " Real, " +
                 COL_PASSWORD + " Text, " +
                 COL_IS_ADMIN + " Integer)";
         return dbDefinition;
@@ -135,6 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_MIDDLE_INITIAL, "A");
         contentValues.put(COL_LAST_NAME, "Administrator");
         contentValues.put(COL_DATE_HIRED, "01-01-2025");
+        contentValues.put(COL_BASIC_SALARY, 0.0);
         contentValues.put(COL_PASSWORD, "admin123");
         contentValues.put(COL_IS_ADMIN, 1);
         db.insert(TABLE_USERS, null, contentValues);
@@ -142,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // User Registration with separate name fields
     public boolean RegisterUser(String empID, String firstName, String middleInitial, String lastName,
-                                String dateHired, String password, int isAdmin)
+                                String dateHired, double basicSalary, String password, int isAdmin)
     {
         SQLiteDatabase saveCmd = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -151,6 +155,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_MIDDLE_INITIAL, middleInitial);
         contentValues.put(COL_LAST_NAME, lastName);
         contentValues.put(COL_DATE_HIRED, dateHired);
+        contentValues.put(COL_BASIC_SALARY, basicSalary);
         contentValues.put(COL_PASSWORD, password);
         contentValues.put(COL_IS_ADMIN, isAdmin);
         long result = saveCmd.insert(TABLE_USERS, null, contentValues);
@@ -173,8 +178,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             middleInitial = resultSet.getString(3);
             lastName = resultSet.getString(4);
             dateHired = resultSet.getString(5);
-            this.password = resultSet.getString(6);
-            isAdmin = resultSet.getInt(7);
+            basicSalary = resultSet.getDouble(6);
+            this.password = resultSet.getString(7);
+            isAdmin = resultSet.getInt(8);
             found = true;
             break;
         }
@@ -287,8 +293,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             middleInitial = resultSet.getString(3);
             lastName = resultSet.getString(4);
             dateHired = resultSet.getString(5);
-            password = resultSet.getString(6);
-            isAdmin = resultSet.getInt(7);
+            basicSalary = resultSet.getDouble(6);
+            password = resultSet.getString(7);
+            isAdmin = resultSet.getInt(8);
             found = true;
             break;
         }
@@ -323,6 +330,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String getDateHired() {
         return dateHired;
+    }
+
+    public double getBasicSalary() {
+        return basicSalary;
     }
 
     public String getPassword() {
@@ -388,6 +399,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void setDateHired(String dateHired) {
         this.dateHired = dateHired;
+    }
+
+    public void setBasicSalary(double basicSalary) {
+        this.basicSalary = basicSalary;
     }
 
     public void setPassword(String password) {
