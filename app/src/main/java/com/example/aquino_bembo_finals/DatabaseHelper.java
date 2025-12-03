@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_MIDDLE_INITIAL, "A");
         contentValues.put(COL_LAST_NAME, "Administrator");
         contentValues.put(COL_DATE_HIRED, "01-01-2025");
-        contentValues.put(COL_BASIC_SALARY, 0.0);
+        contentValues.put(COL_BASIC_SALARY, 50000.00);
         contentValues.put(COL_PASSWORD, "admin123");
         contentValues.put(COL_IS_ADMIN, 1);
         db.insert(TABLE_USERS, null, contentValues);

@@ -333,9 +333,9 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- View Pending Applications Button -->
+        <!-- Logout Button -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_pending"
+            android:id="@+id/card_view_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
@@ -349,7 +349,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:onClick="onClickToPendingApplications"
+                android:onClick="onClickToLogout"
                 android:padding="20dp">
 
                 <ImageView

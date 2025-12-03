@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aquino_Bembo_Finals">
         <activity
+            android:name=".admin.AdminLogout"
+            android:exported="false" />
+        <activity
             android:name=".admin.AllRecordsView"
             android:exported="false" />
         <activity

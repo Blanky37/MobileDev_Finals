@@ -41,4 +41,9 @@ public class AdminHome extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void onClickToLogout(View view) {
+        Intent intent = new Intent(AdminHome.this, AdminLogout.class);
+        startActivity(intent);
+    }
 }
