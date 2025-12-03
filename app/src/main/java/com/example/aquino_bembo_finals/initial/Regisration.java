@@ -27,8 +27,8 @@ import java.util.Locale;
 public class Regisration extends AppCompatActivity {
 
     DatabaseHelper myData = new DatabaseHelper(this);
-    TextInputEditText txtFirstName, txtMiddleInitial, txtLastName, txtDateHired, txtPassword, txtConfirmPassword;
-    TextInputLayout tilFirstName, tilMiddleInitial, tilLastName, tilDateHired, tilPassword, tilConfirmPassword;
+    TextInputEditText txtFirstName, txtMiddleInitial, txtLastName, txtDateHired, txtBasicSalary, txtPassword, txtConfirmPassword;
+    TextInputLayout tilFirstName, tilMiddleInitial, tilLastName, tilDateHired, tilBasicSalary, tilPassword, tilConfirmPassword;
     CheckBox cbTerms;
     TextView tvLoginLink;
     private Calendar calendar;
@@ -48,6 +48,7 @@ public class Regisration extends AppCompatActivity {
         txtMiddleInitial = (TextInputEditText) findViewById(R.id.et_middle_initial);
         txtLastName = (TextInputEditText) findViewById(R.id.et_last_name);
         txtDateHired = (TextInputEditText) findViewById(R.id.et_date_hired);
+        txtBasicSalary = (TextInputEditText) findViewById(R.id.et_basic_salary);
         txtPassword = (TextInputEditText) findViewById(R.id.et_password);
         txtConfirmPassword = (TextInputEditText) findViewById(R.id.et_confirm_password);
 
@@ -55,6 +56,7 @@ public class Regisration extends AppCompatActivity {
         tilMiddleInitial = (TextInputLayout) findViewById(R.id.til_middle_initial);
         tilLastName = (TextInputLayout) findViewById(R.id.til_last_name);
         tilDateHired = (TextInputLayout) findViewById(R.id.til_date_hired);
+        tilBasicSalary = (TextInputLayout) findViewById(R.id.til_basic_salary);
         tilPassword = (TextInputLayout) findViewById(R.id.til_password);
         tilConfirmPassword = (TextInputLayout) findViewById(R.id.til_confirm_password);
 
@@ -122,6 +124,7 @@ public class Regisration extends AppCompatActivity {
         tilMiddleInitial.setError(null);
         tilLastName.setError(null);
         tilDateHired.setError(null);
+        tilBasicSalary.setError(null);
         tilPassword.setError(null);
         tilConfirmPassword.setError(null);
 
@@ -129,6 +132,7 @@ public class Regisration extends AppCompatActivity {
         String middleInitial = txtMiddleInitial.getText().toString().trim();
         String lastName = txtLastName.getText().toString().trim();
         String dateHired = txtDateHired.getText().toString().trim();
+        String basicSalaryStr = txtBasicSalary.getText().toString().trim();
         String password = txtPassword.getText().toString().trim();
         String confirmPassword = txtConfirmPassword.getText().toString().trim();
 
@@ -150,6 +154,27 @@ public class Regisration extends AppCompatActivity {
         {
             tilDateHired.setError("Date hired is required");
             txtDateHired.requestFocus();
+            return;
+        }
+
+        if(basicSalaryStr.isEmpty())
+        {
+            tilBasicSalary.setError("Basic salary is required");
+            txtBasicSalary.requestFocus();
+            return;
+        }
+
+        double basicSalary = 0.0;
+        try {
+            basicSalary = Double.parseDouble(basicSalaryStr);
+            if(basicSalary <= 0) {
+                tilBasicSalary.setError("Basic salary must be greater than 0");
+                txtBasicSalary.requestFocus();
+                return;
+            }
+        } catch (NumberFormatException e) {
+            tilBasicSalary.setError("Please enter a valid salary amount");
+            txtBasicSalary.requestFocus();
             return;
         }
 
@@ -198,7 +223,7 @@ public class Regisration extends AppCompatActivity {
         }
 
         // Register user; 0(false) for regular user, not admin
-        boolean isRecordSaved = myData.RegisterUser(employeeID, firstName, middleInitial, lastName, dateHired, password, 0);
+        boolean isRecordSaved = myData.RegisterUser(employeeID, firstName, middleInitial, lastName, dateHired, basicSalary, password, 0);
 
         if(isRecordSaved)
         {
@@ -209,6 +234,7 @@ public class Regisration extends AppCompatActivity {
             txtMiddleInitial.setText("");
             txtLastName.setText("");
             txtDateHired.setText("");
+            txtBasicSalary.setText("");
             txtPassword.setText("");
             txtConfirmPassword.setText("");
             cbTerms.setChecked(false);

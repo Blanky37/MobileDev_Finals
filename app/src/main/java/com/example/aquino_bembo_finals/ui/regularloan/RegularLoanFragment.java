@@ -21,14 +21,14 @@ import com.google.android.material.textfield.TextInputEditText;
  */
 public class RegularLoanFragment extends Fragment {
 
-    private TextInputEditText etBasicSalary, etMonths;
+    private TextInputEditText etMonths;
     private MaterialButton btnCalculate, btnApply;
-    private View cardResults, cardLoanableAmount;
+    private View cardResults;
     private DatabaseHelper databaseHelper;
     private String currentEmployeeId;
     private boolean hasPendingLoan = false;
 
-    private android.widget.TextView tvLoanableAmount, tvResultBasicSalary, tvResultLoanAmount,
+    private android.widget.TextView tvUserBasicSalary, tvLoanableAmount, tvResultBasicSalary, tvResultLoanAmount,
             tvResultMonths, tvResultInterestRate, tvResultInterest, tvResultServiceCharge,
             tvResultTakeHome, tvResultMonthly;
 
@@ -50,9 +50,8 @@ public class RegularLoanFragment extends Fragment {
         }
 
         checkPendingLoans();
-
         initializeViews(view);
-
+        loadUserBasicSalary();
         setupClickListeners();
 
         return view;
@@ -78,16 +77,31 @@ public class RegularLoanFragment extends Fragment {
         }
     }
 
+    private void loadUserBasicSalary() {
+        if (currentEmployeeId == null || currentEmployeeId.isEmpty()) {
+            return;
+        }
+
+        boolean found = databaseHelper.GetUserDetails(currentEmployeeId);
+        if (found) {
+            double basicSalary = databaseHelper.getBasicSalary();
+            tvUserBasicSalary.setText(LoanComputation.formatCurrency(basicSalary));
+
+            // Calculate and display loanable amount
+            double loanableAmount = basicSalary * 2.5;
+            tvLoanableAmount.setText(LoanComputation.formatCurrency(loanableAmount));
+        }
+    }
+
     private void initializeViews(View view) {
-        etBasicSalary = view.findViewById(R.id.et_basic_salary);
         etMonths = view.findViewById(R.id.et_months);
 
         btnCalculate = view.findViewById(R.id.btn_calculate);
         btnApply = view.findViewById(R.id.btn_apply);
 
         cardResults = view.findViewById(R.id.card_results);
-        cardLoanableAmount = view.findViewById(R.id.card_loanable_amount);
 
+        tvUserBasicSalary = view.findViewById(R.id.tv_user_basic_salary);
         tvLoanableAmount = view.findViewById(R.id.tv_loanable_amount);
 
         tvResultBasicSalary = view.findViewById(R.id.tv_result_basic_salary);
@@ -101,7 +115,6 @@ public class RegularLoanFragment extends Fragment {
 
         // Disable inputs if has pending loan
         if (hasPendingLoan) {
-            etBasicSalary.setEnabled(false);
             etMonths.setEnabled(false);
             btnCalculate.setEnabled(false);
             btnApply.setEnabled(false);
@@ -142,12 +155,18 @@ public class RegularLoanFragment extends Fragment {
 
     private void calculateLoan() {
         try {
-            // Get basic salary from input
-            String salaryStr = etBasicSalary.getText().toString().trim();
-            if (salaryStr.isEmpty()) {
-                showMessage("Input Required", "Please enter basic salary");
+            // Get basic salary from database
+            boolean found = databaseHelper.GetUserDetails(currentEmployeeId);
+            if (!found) {
+                showMessage("Error", "Unable to retrieve your salary information. Please contact administrator.");
                 hideResultsCard();
-                cardLoanableAmount.setVisibility(View.GONE);
+                return;
+            }
+
+            double basicSalary = databaseHelper.getBasicSalary();
+            if (basicSalary <= 0) {
+                showMessage("Salary Not Set", "Your basic salary is not set or is 0. Please contact administrator to update your salary information.");
+                hideResultsCard();
                 return;
             }
 
@@ -156,17 +175,10 @@ public class RegularLoanFragment extends Fragment {
             if (monthsStr.isEmpty()) {
                 showMessage("Input Required", "Please enter number of months");
                 hideResultsCard();
-                cardLoanableAmount.setVisibility(View.GONE);
                 return;
             }
 
-            double basicSalary = Double.parseDouble(salaryStr);
             int months = Integer.parseInt(monthsStr);
-
-            // Calculate and show loanable amount
-            double loanableAmount = basicSalary * 2.5;
-            tvLoanableAmount.setText(LoanComputation.formatCurrency(loanableAmount));
-            cardLoanableAmount.setVisibility(View.VISIBLE);
 
             // Do calculation
             LoanComputation.RegularLoanResult result = LoanComputation.calculateRegularLoan(
@@ -190,13 +202,11 @@ public class RegularLoanFragment extends Fragment {
             cardResults.setVisibility(View.VISIBLE);
 
         } catch (NumberFormatException e) {
-            showMessage("Invalid Input", "Please enter valid numeric values");
+            showMessage("Invalid Input", "Please enter valid number of months");
             hideResultsCard();
-            cardLoanableAmount.setVisibility(View.GONE);
         } catch (Exception e) {
             showMessage("Calculation Error", "An error occurred while calculating the loan. Please try again.");
             hideResultsCard();
-            cardLoanableAmount.setVisibility(View.GONE);
         }
     }
 
@@ -224,16 +234,18 @@ public class RegularLoanFragment extends Fragment {
             return;
         }
 
-        double basicSalary = 0;
+        // Get basic salary from database
+        boolean found = databaseHelper.GetUserDetails(currentEmployeeId);
+        if (!found) {
+            showMessage("Error", "Unable to retrieve your salary information.");
+            return;
+        }
+
+        double basicSalary = databaseHelper.getBasicSalary();
         int months = 0;
 
         try {
-            String salaryStr = etBasicSalary.getText().toString().trim();
             String monthsStr = etMonths.getText().toString().trim();
-
-            if (!salaryStr.isEmpty()) {
-                basicSalary = Double.parseDouble(salaryStr);
-            }
             if (!monthsStr.isEmpty()) {
                 months = Integer.parseInt(monthsStr);
             }
@@ -327,20 +339,16 @@ public class RegularLoanFragment extends Fragment {
     }
 
     private void disableForm() {
-        etBasicSalary.setEnabled(false);
         etMonths.setEnabled(false);
         btnCalculate.setEnabled(false);
         btnApply.setEnabled(false);
     }
 
     private void resetForm() {
-        etBasicSalary.setText("");
         etMonths.setText("");
 
         cardResults.setVisibility(View.GONE);
-        cardLoanableAmount.setVisibility(View.GONE);
 
-        tvLoanableAmount.setText("₱0.00");
         tvResultBasicSalary.setText("₱0.00");
         tvResultLoanAmount.setText("₱0.00");
         tvResultMonths.setText("0");

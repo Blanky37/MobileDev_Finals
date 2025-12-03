@@ -59,13 +59,15 @@ public class LoanComputation {
         double totalPayment;
         double monthlyPayment = 0;
         int months = 6;
+        double interestRate = 0.006;
+
+        interest = loanAmount * months * interestRate;
 
         if (isCashPayment) {
-            // Cash after 6 months: Loan Amount + Service Charge
-            totalPayment = loanAmount + serviceCharge;
+            // Cash after 6 months: Loan Amount + Service Charge + Interest
+            totalPayment = loanAmount + serviceCharge + interest;
         } else {
             // Payable in 6 months: (Loan Amount + Service Charge + Interest) / 6
-            interest = loanAmount * 0.006;
             totalPayment = loanAmount + serviceCharge + interest;
             monthlyPayment = totalPayment / months;
         }
