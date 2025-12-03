@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.activity.OnBackPressedCallback;
 
 import com.example.aquino_bembo_finals.initial.Login;
 import com.example.aquino_bembo_finals.R;
@@ -46,6 +48,16 @@ public class LogoutFragment extends Fragment {
                 showLogoutConfirmation();
             }
         });
+
+        // Handle back button press
+        OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                navigateToHome();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         return root;
     }
@@ -86,7 +98,7 @@ public class LogoutFragment extends Fragment {
 
     private void navigateToHome() {
         // Navigate back to home fragment using Navigation component
-        if (getActivity() != null) getActivity().onBackPressed();
+        NavHostFragment.findNavController(LogoutFragment.this).popBackStack();
     }
 
     private void performLogout() {
