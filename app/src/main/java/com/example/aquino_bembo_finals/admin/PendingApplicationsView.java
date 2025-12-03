@@ -37,7 +37,6 @@ public class PendingApplicationsView extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize UI elements
         ll_applications_container = (LinearLayout) findViewById(R.id.ll_applications_container);
         ll_empty_state = (LinearLayout) findViewById(R.id.ll_empty_state);
         ll_loading = (LinearLayout) findViewById(R.id.ll_loading);
@@ -80,7 +79,6 @@ public class PendingApplicationsView extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Just close the dialog when OK is clicked
             }
         });
         builder.show();
@@ -111,7 +109,7 @@ public class PendingApplicationsView extends AppCompatActivity {
                 if (status.equalsIgnoreCase("Pending")) {
                     pendingCount++;
 
-                    // Create application card
+                    // Create application card (dynamic)
                     View applicationCard = createApplicationCard(
                             resultSet.getInt(0),           // LoanID
                             resultSet.getString(1),        // EmployeeID
@@ -199,7 +197,6 @@ public class PendingApplicationsView extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Do nothing, just close the dialog
             }
         });
         builder.show();
@@ -219,16 +216,14 @@ public class PendingApplicationsView extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Do nothing, just close the dialog
             }
         });
         builder.show();
     }
 
     private void showApproveAllConfirmation() {
-        // Count pending applications first
+        // Count pending applications
         int pendingCount = countPendingApplications();
-
         if (pendingCount == 0) {
             myMessageWindow("No Applications", "There are no pending applications to approve.");
             return;
@@ -247,7 +242,6 @@ public class PendingApplicationsView extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Do nothing, just close the dialog
             }
         });
         builder.show();
@@ -275,7 +269,6 @@ public class PendingApplicationsView extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Do nothing, just close the dialog
             }
         });
         builder.show();
