@@ -167,7 +167,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Pending Icon"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/hourglass_top"
                     app:tint="#F39C12" />
 
                 <LinearLayout
@@ -200,7 +200,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/arrow_to_next_page"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>
@@ -230,7 +230,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="All Applications Icon"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/files"
                     app:tint="#3498DB" />
 
                 <LinearLayout
@@ -263,7 +263,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/arrow_to_next_page"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>
@@ -293,7 +293,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Records Icon"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/folder_eye"
                     app:tint="#27AE60" />
 
                 <LinearLayout
@@ -326,7 +326,71 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/arrow_to_next_page"
+                    android:tint="#BDC3C7" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- View Pending Applications Button -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_pending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:onClick="onClickToPendingApplications"
+                android:padding="20dp">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="Records Icon"
+                    android:src="@drawable/exit"
+                    app:tint="#F54927" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Logout"
+                        android:textColor="#2C3E50"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Exit Admin"
+                        android:textColor="#7F8C8D"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Arrow"
+                    android:src="@drawable/arrow_to_next_page"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>
