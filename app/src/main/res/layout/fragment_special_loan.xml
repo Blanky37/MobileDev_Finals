@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".ui.specialloan.SpecialLoanFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <!-- Header Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +52,9 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" >
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,7 +76,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Loan Amount" >
+                    android:hint="Loan Amount"
+                    app:boxBackgroundMode="outline"
+                    app:startIconDrawable="@drawable/money">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_loan_amount"
@@ -80,13 +88,23 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- Loan Amount Range Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Range: ₱50,000 - ₱100,000"
-                    android:textColor="#7F8C8D"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:text="Range: ₱50,000 - ₱100,000"
+                        android:textColor="#34495E"
+                        android:textSize="12sp" />
+
+                </androidx.cardview.widget.CardView>
 
                 <!-- Months to Pay Input -->
                 <com.google.android.material.textfield.TextInputLayout
@@ -94,7 +112,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Number of Months to Pay" >
+                    android:hint="Number of Months to Pay"
+                    app:boxBackgroundMode="outline"
+                    app:startIconDrawable="@drawable/calendar_dots">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_months"
@@ -104,25 +124,37 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- Months Range Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Range: 1-18 months"
-                    android:textColor="#7F8C8D"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:text="Range: 1-18 months"
+                        android:textColor="#34495E"
+                        android:textSize="12sp" />
+
+                </androidx.cardview.widget.CardView>
 
                 <!-- Interest Rate Info -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" >
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -136,7 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="1-6 months: 0.60%"
+                            android:text="• 1-6 months: 0.60%"
                             android:textColor="#34495E"
                             android:textSize="12sp" />
 
@@ -144,7 +176,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="7-12 months: 0.62%"
+                            android:text="• 7-12 months: 0.62%"
                             android:textColor="#34495E"
                             android:textSize="12sp" />
 
@@ -152,7 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="13-18 months: 0.65%"
+                            android:text="• 13-18 months: 0.65%"
                             android:textColor="#34495E"
                             android:textSize="12sp" />
 
@@ -164,10 +196,11 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_calculate"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="56dp"
                     android:layout_marginTop="20dp"
                     android:text="Calculate Loan"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:cornerRadius="8dp" />
 
             </LinearLayout>
 
@@ -179,7 +212,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:visibility="gone" >
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -190,7 +225,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Loan Summary"
+                    android:text="📋 Loan Summary"
                     android:textColor="#2C3E50"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -377,10 +412,11 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_apply"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="56dp"
                     android:layout_marginTop="16dp"
                     android:text="Apply for This Loan"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:cornerRadius="8dp" />
 
             </LinearLayout>
 

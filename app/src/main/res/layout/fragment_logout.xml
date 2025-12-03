@@ -12,10 +12,10 @@
     <!-- App Logo -->
     <ImageView
         android:id="@+id/img_logo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="197dp"
+        android:layout_height="213dp"
         android:contentDescription="ABC Credit Cooperative Logo"
-        android:src="@drawable/ic_menu_gallery" />
+        android:src="@drawable/abc_company" />
 
     <TextView
         android:layout_width="wrap_content"

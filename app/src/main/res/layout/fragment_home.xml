@@ -22,10 +22,10 @@
 
             <ImageView
                 android:id="@+id/img_logo"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="189dp"
+                android:layout_height="212dp"
                 android:contentDescription="ABC Credit Cooperative Logo"
-                android:src="@drawable/ic_menu_gallery" />
+                android:src="@drawable/abc_company" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Emergency Loan Icon"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/emergency"
                     android:tint="#E74C3C" />
 
                 <LinearLayout
@@ -165,7 +165,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/arrow_to_next_page"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>
@@ -194,7 +194,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Special Loan Icon"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/special_star"
                     android:tint="#3498DB" />
 
                 <LinearLayout
@@ -235,7 +235,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/arrow_to_next_page"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>
@@ -264,7 +264,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Regular Loan Icon"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/money"
                     android:tint="#27AE60" />
 
                 <LinearLayout
@@ -305,7 +305,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Arrow"
-                    android:src="@drawable/ic_menu_gallery"
+                    android:src="@drawable/arrow_to_next_page"
                     android:tint="#BDC3C7" />
 
             </LinearLayout>

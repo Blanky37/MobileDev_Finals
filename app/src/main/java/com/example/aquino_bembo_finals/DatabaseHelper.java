@@ -243,7 +243,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return resultSet;
     }
 
-    // View All Loan Applications (Admin Only)
+    // View All Loan Applications
     public Cursor ViewAllLoans()
     {
         SQLiteDatabase viewCmd = this.getReadableDatabase();
@@ -257,7 +257,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // Update Loan Status (Approve/Disapprove) - Admin Only
+    // Update Loan Status (Approve/Disapprove)
     public boolean UpdateLoanStatus(int loanID, String status)
     {
         SQLiteDatabase updateCmd = this.getWritableDatabase();

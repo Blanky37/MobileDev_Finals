@@ -20,16 +20,9 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment using View Binding
+
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        // The old code that caused the error is now removed.
-        // It was trying to find a TextView called "textHome" which no longer exists.
-        // final TextView textView = binding.textHome;
-
-        // You can now access your actual views. For example, to set the employee name:
-        // binding.tvEmployeeName.setText("Bembo Aquino");
 
         return root;
     }
@@ -38,12 +31,10 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Get the NavController to handle navigation between fragments
+        // NavController to handle navigation between fragments
         final NavController navController = Navigation.findNavController(view);
 
-        // Set up click listeners for the loan cards to navigate to other screens
         binding.cardEmergencyLoan.setOnClickListener(v -> {
-            // Navigate to the Emergency Loan fragment using its ID from the navigation graph
             navController.navigate(R.id.nav_emergencyloan);
         });
 
@@ -61,7 +52,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // This is important to prevent memory leaks by cleaning up the binding reference
         binding = null;
     }
 }

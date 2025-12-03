@@ -6,23 +6,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/home"
             android:title="Home" />
         <item
             android:id="@+id/nav_emergencyloan"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/emergency"
             android:title="Emergency Loan" />
         <item
             android:id="@+id/nav_specialloan"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/special_star"
             android:title="Special Loan" />
         <item
             android:id="@+id/nav_regularloan"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/money"
             android:title="Regular Loan" />
         <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/history"
+            android:title="Loan History" />
+        <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/exit"
             android:title="Logout" />
     </group>
 </menu>

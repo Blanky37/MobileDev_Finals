@@ -10,8 +10,10 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.activity.OnBackPressedCallback;
 
-import com.example.aquino_bembo_finals.Login;
+import com.example.aquino_bembo_finals.initial.Login;
 import com.example.aquino_bembo_finals.R;
 
 public class LogoutFragment extends Fragment {
@@ -19,7 +21,7 @@ public class LogoutFragment extends Fragment {
     Button btnCancel, btnLogout;
 
     public LogoutFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -28,11 +30,9 @@ public class LogoutFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_logout, container, false);
 
-        // Initialize buttons
         btnCancel = (Button) root.findViewById(R.id.btn_cancel);
         btnLogout = (Button) root.findViewById(R.id.btn_logout);
 
-        // Set up button click listeners
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,10 +49,19 @@ public class LogoutFragment extends Fragment {
             }
         });
 
+        // Handle back button press
+        OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                navigateToHome();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
         return root;
     }
 
-    //Message Window Method (following professor's style)
     public void myMessageWindow(String title, String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setCancelable(true);
@@ -89,13 +98,10 @@ public class LogoutFragment extends Fragment {
 
     private void navigateToHome() {
         // Navigate back to home fragment using Navigation component
-        if (getActivity() != null) {
-            getActivity().onBackPressed();
-        }
+        NavHostFragment.findNavController(LogoutFragment.this).popBackStack();
     }
 
     private void performLogout() {
-        // Show success message
         myMessageWindow("Logout Success", "You have been logged out successfully.");
 
         // Navigate to Login activity after a short delay
