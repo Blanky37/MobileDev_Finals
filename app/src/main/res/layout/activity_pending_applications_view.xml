@@ -60,10 +60,12 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Quick Actions -->
+        <!-- Quick Actions -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center_horizontal"
             android:layout_marginBottom="16dp">
 
             <Button
@@ -74,6 +76,7 @@
                 android:text="Refresh"
                 android:textAllCaps="false"
                 android:drawablePadding="8dp"
+                android:backgroundTint="@color/blue"
                 android:drawableStart="@drawable/ic_menu_gallery" />
 
             <Button
@@ -100,6 +103,7 @@
                 android:drawableStart="@drawable/ic_menu_gallery" />
 
         </LinearLayout>
+
 
         <!-- Applications List Container -->
         <TextView

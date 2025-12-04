@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="offwhite">#F5F5F5</color>
+    <color name="blue">#2196F3</color>
     <color name="status_pending">#FF8800</color>
     <color name="status_approved">#669900</color>
     <color name="status_denied">#CC0000</color>
