@@ -2,6 +2,7 @@ package com.example.aquino_bembo_finals.initial;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -111,6 +112,15 @@ public class Login extends AppCompatActivity {
                 welcomeMessage = "Welcome System Administrator!";
                 myMessageWindow("Admin Login Success", welcomeMessage);
 
+                // Save to SharedPreferences for admin
+                saveUserToSharedPreferences(
+                        myData.getEmployeeID(),
+                        myData.getFullName(),
+                        myData.getFirstName(),
+                        myData.getLastName(),
+                        myData.getIsAdmin()
+                );
+
                 // Redirect to admin page (using slideshow fragment as admin page)
                 Intent intent = new Intent(Login.this, AdminHome.class);
 
@@ -129,6 +139,15 @@ public class Login extends AppCompatActivity {
             {
                 welcomeMessage = "Welcome " + myData.getFullName() + "!";
                 myMessageWindow("Login Success", welcomeMessage);
+
+                // Save to SharedPreferences for regular user
+                saveUserToSharedPreferences(
+                        myData.getEmployeeID(),
+                        myData.getFullName(),
+                        myData.getFirstName(),
+                        myData.getLastName(),
+                        myData.getIsAdmin()
+                );
 
                 // Navigate to MainActivity (navigation drawer)
                 Intent intent = new Intent(Login.this, MainActivity.class);
@@ -150,6 +169,19 @@ public class Login extends AppCompatActivity {
             txtPassword.setText("");
             txtPassword.requestFocus();
         }
+    }
+
+    private void saveUserToSharedPreferences(String employeeID, String fullName,
+                                             String firstName, String lastName, int isAdmin) {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("employeeID", employeeID);
+        editor.putString("fullName", fullName);
+        editor.putString("firstName", firstName);
+        editor.putString("lastName", lastName);
+        editor.putInt("isAdmin", isAdmin);
+        editor.putBoolean("isLoggedIn", true);
+        editor.apply();
     }
 
     @Override

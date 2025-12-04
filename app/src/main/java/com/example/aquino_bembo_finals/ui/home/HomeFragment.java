@@ -47,6 +47,11 @@ public class HomeFragment extends Fragment {
             // Navigate to the Regular Loan fragment
             navController.navigate(R.id.nav_regularloan);
         });
+
+        binding.cardLoanHistory.setOnClickListener(v -> {
+            // Navigate to the User History fragment using its ID from the navigation graph
+            navController.navigate(R.id.nav_history);
+        });
     }
 
     @Override

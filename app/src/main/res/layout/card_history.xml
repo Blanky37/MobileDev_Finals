@@ -3,24 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="16dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <!-- History Icon -->
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="20dp"
             android:contentDescription="History Item"
             android:src="@drawable/history"
             android:tint="#9B59B6" />
@@ -37,83 +41,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="12dp">
 
-                <TextView
-                    android:id="@+id/tv_loan_type"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Emergency Loan"
-                    android:textColor="#2C3E50"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/tv_loan_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Emergency Loan"
+                        android:textColor="#2C3E50"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_loan_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="ID: 001"
+                        android:textColor="#95A5A6"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <!-- Status Badge -->
                 <TextView
                     android:id="@+id/tv_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
                     android:text="Pending"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:background="#F39C12"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical" />
 
             </LinearLayout>
 
-            <!-- Amount and Term -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Amount -->
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="4dp">
+                android:layout_marginBottom="8dp"
+                android:text="₱25,000.00"
+                android:textColor="#2C3E50"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_amount"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="₱25,000.00"
-                    android:textColor="#2C3E50"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_months"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="6 months"
-                    android:textColor="#7F8C8D"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <!-- Date and ID -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Term -->
+            <TextView
+                android:id="@+id/tv_months"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginBottom="8dp"
+                android:text="Term: 6 months"
+                android:textColor="#7F8C8D"
+                android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Applied: 01/15/2024"
-                    android:textColor="#7F8C8D"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_loan_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ID: 001"
-                    android:textColor="#BDC3C7"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
+            <!-- Date -->
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Applied: 01/15/2024"
+                android:textColor="#7F8C8D"
+                android:textSize="13sp" />
 
         </LinearLayout>
 

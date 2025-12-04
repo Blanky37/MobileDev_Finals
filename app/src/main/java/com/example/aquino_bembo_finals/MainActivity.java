@@ -1,6 +1,7 @@
 package com.example.aquino_bembo_finals;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private String currentEmployeeId;
     private String currentEmployeeName;
+    private int currentIsAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         if (intent != null) {
             currentEmployeeId = intent.getStringExtra("EMPLOYEE_ID");
             currentEmployeeName = intent.getStringExtra("EMPLOYEE_NAME");
+            currentIsAdmin = intent.getIntExtra("IS_ADMIN", 0);
+
+            // Save to SharedPreferences as a session
+            saveUserToSharedPreferences();
+        } else {
+            // Try to get from SharedPreferences if intent session is null
+            loadUserFromSharedPreferences();
         }
 
         setSupportActionBar(binding.appBarMain.toolbar);
@@ -55,7 +64,25 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
 
+    // Save user data to SharedPreferences
+    private void saveUserToSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("employeeID", currentEmployeeId);
+        editor.putString("employeeName", currentEmployeeName);
+        editor.putInt("isAdmin", currentIsAdmin);
+        editor.putBoolean("isLoggedIn", true);
+        editor.apply();
+    }
+
+    // Load user data from SharedPreferences
+    private void loadUserFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        currentEmployeeId = sharedPreferences.getString("employeeID", "");
+        currentEmployeeName = sharedPreferences.getString("employeeName", "");
+        currentIsAdmin = sharedPreferences.getInt("isAdmin", 0);
     }
 
     // Update the navigation header with user info
@@ -92,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
     public String getCurrentEmployeeId() {
         return currentEmployeeId;
     }
