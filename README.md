@@ -600,12 +600,12 @@ test: Add unit tests for LoanComputation class
 #### Manual Testing Checklist
 
 **Authentication:**
-- [ ] Login with valid admin credentials
-- [ ] Login with valid employee credentials
-- [ ] Login with invalid credentials shows error
-- [ ] Register new employee account
+- [x] Login with valid admin credentials
+- [x] Login with valid employee credentials
+- [x] Login with invalid credentials shows error
+- [x] Register new employee account
 - [ ] Duplicate employee ID prevented
-- [ ] Password validation working
+- [x] Password validation working
 
 **Loan Applications:**
 - [ ] Emergency loan within valid range
