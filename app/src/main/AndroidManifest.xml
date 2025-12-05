@@ -20,6 +20,7 @@
         <activity
             android:name=".admin.AllApplicationsView"
             android:exported="false" />
+
         <activity
             android:name=".admin.PendingApplicationsView"
             android:exported="false" />

@@ -303,6 +303,107 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return found;
     }
 
+    // Get all users (for AllRecordsView)
+    public Cursor GetAllUsers() {
+        SQLiteDatabase viewCmd = this.getReadableDatabase();
+        Cursor resultSet;
+        resultSet = viewCmd.rawQuery(
+                "SELECT " + COL_EMPLOYEE_ID + ", " +
+                        COL_FIRST_NAME + ", " +
+                        COL_LAST_NAME + ", " +
+                        COL_DATE_HIRED + ", " +
+                        COL_BASIC_SALARY + ", " +
+                        COL_IS_ADMIN +
+                        " FROM " + TABLE_USERS +
+                        " ORDER BY " + COL_EMPLOYEE_ID,
+                null
+        );
+        return resultSet;
+    }
+
+    // Get all loans with all details
+    public Cursor GetAllLoansDetailed() {
+        SQLiteDatabase viewCmd = this.getReadableDatabase();
+        Cursor resultSet;
+        resultSet = viewCmd.rawQuery(
+                "SELECT " + COL_LOAN_ID + ", " +
+                        COL_EMPLOYEE_ID + ", " +
+                        COL_LOAN_TYPE + ", " +
+                        COL_LOAN_AMOUNT + ", " +
+                        COL_MONTHS_TO_PAY + ", " +
+                        COL_LOAN_STATUS + ", " +
+                        COL_APPLICATION_DATE +
+                        " FROM " + TABLE_LOANS +
+                        " ORDER BY " + COL_LOAN_ID + " DESC",
+                null
+        );
+        return resultSet;
+    }
+
+    // Get active loans count (pending loans)
+    public int GetActiveLoansCount() {
+        SQLiteDatabase readCmd = this.getReadableDatabase();
+        Cursor cursor = null;
+        int count = 0;
+        try {
+            cursor = readCmd.rawQuery(
+                    "SELECT COUNT(*) FROM " + TABLE_LOANS +
+                            " WHERE " + COL_LOAN_STATUS + " = 'Pending'",
+                    null
+            );
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return count;
+    }
+
+    // Get total users count
+    public int GetTotalUsersCount() {
+        SQLiteDatabase readCmd = this.getReadableDatabase();
+        Cursor cursor = null;
+        int count = 0;
+        try {
+            cursor = readCmd.rawQuery("SELECT COUNT(*) FROM " + TABLE_USERS, null);
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return count;
+    }
+
+    // Get total loans count
+    public int GetTotalLoansCount() {
+        SQLiteDatabase readCmd = this.getReadableDatabase();
+        Cursor cursor = null;
+        int count = 0;
+        try {
+            cursor = readCmd.rawQuery("SELECT COUNT(*) FROM " + TABLE_LOANS, null);
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return count;
+    }
+
     // Getter Methods
     public String getEmployeeID() {
         return employeeID;
