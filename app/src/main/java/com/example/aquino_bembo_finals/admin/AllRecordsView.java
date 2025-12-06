@@ -58,7 +58,7 @@ public class AllRecordsView extends AppCompatActivity {
             public void onClick(View v) {
                 currentViewMode = "users";
                 setActiveButton(btn_view_users);
-                tv_section_title.setText("👥 All Users");
+                tv_section_title.setText("All Users");
                 loadUsers();
             }
         });

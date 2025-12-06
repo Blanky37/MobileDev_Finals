@@ -282,7 +282,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="📋 Loan Summary"
+                    android:text="Loan Summary"
                     android:textColor="#2C3E50"
                     android:textSize="18sp"
                     android:textStyle="bold" />
