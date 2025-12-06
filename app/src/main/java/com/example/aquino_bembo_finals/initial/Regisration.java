@@ -136,6 +136,7 @@ public class Regisration extends AppCompatActivity {
         String password = txtPassword.getText().toString().trim();
         String confirmPassword = txtConfirmPassword.getText().toString().trim();
 
+        // Validate fields
         if(firstName.isEmpty())
         {
             tilFirstName.setError("First name is required");

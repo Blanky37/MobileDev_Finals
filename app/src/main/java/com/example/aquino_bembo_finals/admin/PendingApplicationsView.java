@@ -325,7 +325,6 @@ public class PendingApplicationsView extends AppCompatActivity {
         }
 
         resultSet.close();
-
         if (approvedCount > 0) {
             myMessageWindow("Success", approvedCount + " loan application(s) have been approved.");
             loadPendingApplications();
@@ -350,7 +349,6 @@ public class PendingApplicationsView extends AppCompatActivity {
         }
 
         resultSet.close();
-
         if (deniedCount > 0) {
             myMessageWindow("Success", deniedCount + " loan application(s) have been denied.");
             loadPendingApplications();

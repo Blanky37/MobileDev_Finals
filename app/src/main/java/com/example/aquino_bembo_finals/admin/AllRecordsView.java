@@ -28,7 +28,7 @@ public class AllRecordsView extends AppCompatActivity {
     MaterialButton btn_view_users, btn_view_loans, btn_view_both;
 
     // Track current view mode
-    private String currentViewMode = "users";
+    private String currentViewMode = "users"; // "users", "loans", "both"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,6 @@ public class AllRecordsView extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
         myData = new DatabaseHelper(this);
 
@@ -54,13 +53,12 @@ public class AllRecordsView extends AppCompatActivity {
 
         setActiveButton(btn_view_users);
 
-
         btn_view_users.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentViewMode = "users";
                 setActiveButton(btn_view_users);
-                tv_section_title.setText("👥 All Users");
+                tv_section_title.setText("All Users");
                 loadUsers();
             }
         });
@@ -85,18 +83,21 @@ public class AllRecordsView extends AppCompatActivity {
             }
         });
 
+        // Load initial data (users by default)
         loadUsers();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        // Refresh data when returning to activity
         refreshCurrentView();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Close database connection if needed
         if (myData != null) {
             myData.close();
         }
@@ -117,7 +118,6 @@ public class AllRecordsView extends AppCompatActivity {
     }
 
     private void setActiveButton(MaterialButton activeButton) {
-        // Reset all buttons to default color
         btn_view_users.setBackgroundColor(Color.parseColor("#E0E0E0"));
         btn_view_loans.setBackgroundColor(Color.parseColor("#E0E0E0"));
         btn_view_both.setBackgroundColor(Color.parseColor("#E0E0E0"));
@@ -181,6 +181,7 @@ public class AllRecordsView extends AppCompatActivity {
     private void loadLoans() {
         showLoadingState();
 
+        // Clear existing records
         ll_records_container.removeAllViews();
 
         // Get all loans from database
@@ -220,6 +221,7 @@ public class AllRecordsView extends AppCompatActivity {
     private void loadBoth() {
         showLoadingState();
 
+        // Clear existing records
         ll_records_container.removeAllViews();
 
         // Load users
@@ -287,6 +289,8 @@ public class AllRecordsView extends AppCompatActivity {
         }
     }
 
+
+    // Helper methods for creating user cards
     private View createUserCard(String employeeID, String firstName, String lastName,
                                 String dateHired, double basicSalary, int isAdmin) {
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -316,6 +320,7 @@ public class AllRecordsView extends AppCompatActivity {
         return cardView;
     }
 
+    // Helper methods for creating loan cards
     private View createLoanCard(int loanID, String employeeID, String loanType,
                                 double loanAmount, int monthsToPay, String status,
                                 String applicationDate) {
@@ -370,7 +375,7 @@ public class AllRecordsView extends AppCompatActivity {
         ll_records_container.setVisibility(View.GONE);
         ll_empty_state.setVisibility(View.VISIBLE);
 
-
+        // Update the empty state message
         TextView tvEmptyMessage = ll_empty_state.findViewById(R.id.tv_empty_message);
         if (tvEmptyMessage != null) {
             tvEmptyMessage.setText(message);

@@ -63,11 +63,9 @@ public class UserHistory extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Initialize DatabaseHelper here (after the view is created)
         myData = new DatabaseHelper(getActivity());
 
-        // Get current user's employee ID from SharedPreferences
+        // Get current user's employee ID from SharedPreferences(see login.java)
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         currentEmployeeID = sharedPreferences.getString("employeeID", "");
     }
@@ -87,7 +85,6 @@ public class UserHistory extends Fragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Just close the dialog when OK is clicked
             }
         });
         builder.show();
@@ -126,7 +123,7 @@ public class UserHistory extends Fragment {
         int deniedCount = 0;
 
         if (resultSet.getCount() == 0) {
-            // No applications found for this user
+            // No applications found
             ll_loading.setVisibility(View.GONE);
             ll_empty_state.setVisibility(View.VISIBLE);
             tv_history_count.setText("0 loan applications");
@@ -206,7 +203,6 @@ public class UserHistory extends Fragment {
         tvStatus.setText(status);
         int colorResId = 0; // Default value
         if (status.equalsIgnoreCase("Pending")) {
-            // Reference your custom color here
             colorResId = R.color.status_pending;
         } else if (status.equalsIgnoreCase("Approved")) {
             colorResId = R.color.status_approved;
@@ -214,14 +210,14 @@ public class UserHistory extends Fragment {
             colorResId = R.color.status_denied;
         }
 
-        // Only set the color if we found a match
+        // Only set the color if match
         if (colorResId != 0) {
             // IMPORTANT: convert the ID (R.color.xxx) to the actual Color Integer
             int resolvedColor = ContextCompat.getColor(getContext(), colorResId);
             tvStatus.setBackgroundColor(resolvedColor);
         }
 
-        // Make the card clickable to show details
+        // onClick to show details
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

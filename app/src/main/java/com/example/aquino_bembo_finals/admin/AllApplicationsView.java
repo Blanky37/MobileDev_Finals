@@ -138,11 +138,9 @@ public class AllApplicationsView extends AppCompatActivity {
     private View createApplicationCard(int loanID, String employeeID, String loanType,
                                        double loanAmount, int monthsToPay, String status,
                                        String applicationDate) {
-        // Inflate the card layout
         LayoutInflater inflater = LayoutInflater.from(this);
         View cardView = inflater.inflate(R.layout.card_application, null);
 
-        // Set data to card views
         TextView tvEmployeeID = (TextView) cardView.findViewById(R.id.tv_employee_id);
         TextView tvLoanType = (TextView) cardView.findViewById(R.id.tv_loan_type);
         TextView tvStatus = (TextView) cardView.findViewById(R.id.tv_status);

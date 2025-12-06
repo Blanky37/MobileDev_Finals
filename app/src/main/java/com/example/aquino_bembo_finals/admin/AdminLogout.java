@@ -25,11 +25,10 @@ public class AdminLogout extends AppCompatActivity {
         btnCancel = findViewById(R.id.btn_cancel);
         btnLogout = findViewById(R.id.btn_logout);
 
-        // Set OnClickListener for the Cancel button
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Simply finish the current activity to go back to the previous one (AdminHome)
+                // finish the current activity to go back to the previous one (AdminHome)
                 finish();
             }
         });
@@ -43,17 +42,21 @@ public class AdminLogout extends AppCompatActivity {
             }
         });
 
+        // Modern approach for handling back button press
         setupBackPressedHandler();
     }
 
     private void setupBackPressedHandler() {
+        // Create a callback that will be triggered when the back button is pressed
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                // Handle the back button press
                 finish();
             }
         };
 
+        // Add the callback to the OnBackPressedDispatcher
         getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
@@ -65,12 +68,14 @@ public class AdminLogout extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // User clicked "Yes", proceed logout
                 performLogout();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // User clicked "No", do nothing and dismiss the dialog
                 dialogInterface.dismiss();
             }
         });
@@ -85,6 +90,7 @@ public class AdminLogout extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // Just close the dialog when OK is clicked
             }
         });
         builder.show();
@@ -93,6 +99,7 @@ public class AdminLogout extends AppCompatActivity {
     private void performLogout() {
         myMessageWindow("Logout Success", "You have been logged out successfully.");
 
+        // Navigate to the Login activity after a short delay
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -100,8 +107,8 @@ public class AdminLogout extends AppCompatActivity {
                 // These flags clear the activity stack, so the user can't go back to the admin panel
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish();
+                finish(); // Finish the AdminLogout activity
             }
-        }, 1500);
+        }, 1500); // 1.5-second delay
     }
 }
