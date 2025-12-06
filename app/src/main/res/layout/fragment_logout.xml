@@ -7,7 +7,6 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="@color/offwhite"
     tools:context=".ui.logout.LogoutFragment">
 
     <!-- App Logo -->
