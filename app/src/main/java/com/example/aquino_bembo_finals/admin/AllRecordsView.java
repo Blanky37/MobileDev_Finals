@@ -28,7 +28,7 @@ public class AllRecordsView extends AppCompatActivity {
     MaterialButton btn_view_users, btn_view_loans, btn_view_both;
 
     // Track current view mode
-    private String currentViewMode = "users"; // "users", "loans", "both"
+    private String currentViewMode = "users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +41,9 @@ public class AllRecordsView extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize DatabaseHelper
+
         myData = new DatabaseHelper(this);
 
-        // Initialize UI elements
         ll_records_container = findViewById(R.id.ll_records_container);
         ll_empty_state = findViewById(R.id.ll_empty_state);
         ll_loading = findViewById(R.id.ll_loading);
@@ -53,10 +52,9 @@ public class AllRecordsView extends AppCompatActivity {
         btn_view_loans = findViewById(R.id.btn_view_loans);
         btn_view_both = findViewById(R.id.btn_view_both);
 
-        // Set initial button colors
         setActiveButton(btn_view_users);
 
-        // Set button click listeners
+
         btn_view_users.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,21 +85,18 @@ public class AllRecordsView extends AppCompatActivity {
             }
         });
 
-        // Load initial data (users by default)
         loadUsers();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh data when returning to activity
         refreshCurrentView();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Close database connection if needed
         if (myData != null) {
             myData.close();
         }
@@ -145,13 +140,12 @@ public class AllRecordsView extends AppCompatActivity {
     }
 
     private void loadUsers() {
-        // Show loading state
         showLoadingState();
 
         // Clear existing records
         ll_records_container.removeAllViews();
 
-        // Get all users from database using the new method
+        // Get all users from database
         Cursor cursor = null;
         try {
             cursor = myData.GetAllUsers();
@@ -185,13 +179,11 @@ public class AllRecordsView extends AppCompatActivity {
     }
 
     private void loadLoans() {
-        // Show loading state
         showLoadingState();
 
-        // Clear existing records
         ll_records_container.removeAllViews();
 
-        // Get all loans from database using the new method
+        // Get all loans from database
         Cursor cursor = null;
         try {
             cursor = myData.GetAllLoansDetailed();
@@ -226,13 +218,11 @@ public class AllRecordsView extends AppCompatActivity {
     }
 
     private void loadBoth() {
-        // Show loading state
         showLoadingState();
 
-        // Clear existing records
         ll_records_container.removeAllViews();
 
-        // Load users first
+        // Load users
         Cursor usersCursor = null;
         boolean hasRecords = false;
 
@@ -380,7 +370,7 @@ public class AllRecordsView extends AppCompatActivity {
         ll_records_container.setVisibility(View.GONE);
         ll_empty_state.setVisibility(View.VISIBLE);
 
-        // Update the empty state message
+
         TextView tvEmptyMessage = ll_empty_state.findViewById(R.id.tv_empty_message);
         if (tvEmptyMessage != null) {
             tvEmptyMessage.setText(message);

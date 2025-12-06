@@ -44,14 +44,12 @@ public class AllApplicationsView extends AppCompatActivity {
         tv_approved_count = (TextView) findViewById(R.id.tv_approved_count);
         tv_denied_count = (TextView) findViewById(R.id.tv_denied_count);
 
-        // Load all applications initially
         loadAllApplications();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh the list when returning to this activity
         loadAllApplications();
     }
 
@@ -69,7 +67,6 @@ public class AllApplicationsView extends AppCompatActivity {
     }
 
     private void loadAllApplications() {
-        // Show loading state
         ll_loading.setVisibility(View.VISIBLE);
         ll_applications_container.setVisibility(View.GONE);
         ll_empty_state.setVisibility(View.GONE);
@@ -97,7 +94,7 @@ public class AllApplicationsView extends AppCompatActivity {
                 totalCount++;
                 String status = resultSet.getString(5); // Column 5 is LoanStatus
 
-                // Count by status
+                // Status counts
                 if (status.equalsIgnoreCase("Pending")) {
                     pendingCount++;
                 } else if (status.equalsIgnoreCase("Approved")) {
@@ -106,7 +103,7 @@ public class AllApplicationsView extends AppCompatActivity {
                     deniedCount++;
                 }
 
-                // Create application card for ALL applications (not just pending)
+                // Create application card for ALL applications
                 View applicationCard = createApplicationCard(
                         resultSet.getInt(0),           // LoanID
                         resultSet.getString(1),        // EmployeeID
@@ -126,7 +123,6 @@ public class AllApplicationsView extends AppCompatActivity {
             tv_approved_count.setText(String.valueOf(approvedCount));
             tv_denied_count.setText(String.valueOf(deniedCount));
 
-            // Update UI based on results
             ll_loading.setVisibility(View.GONE);
 
             if (totalCount > 0) {
@@ -165,7 +161,6 @@ public class AllApplicationsView extends AppCompatActivity {
         tvDateApplied.setText(applicationDate);
         tvLoanID.setText("LOAN" + loanID);
 
-        // Set status with appropriate color
         tvStatus.setText(status);
         if (status.equalsIgnoreCase("Pending")) {
             tvStatus.setBackgroundResource(android.R.color.holo_orange_dark);
@@ -175,7 +170,6 @@ public class AllApplicationsView extends AppCompatActivity {
             tvStatus.setBackgroundResource(android.R.color.holo_red_dark);
         }
 
-        // Show action buttons only for pending applications
         if (status.equalsIgnoreCase("Pending")) {
             llActionButtons.setVisibility(View.VISIBLE);
 
@@ -243,7 +237,7 @@ public class AllApplicationsView extends AppCompatActivity {
 
         if (isUpdated) {
             myMessageWindow("Success", "Loan application #" + loanID + " has been approved.");
-            loadAllApplications(); // Refresh the list
+            loadAllApplications();
         } else {
             myMessageWindow("Error", "Failed to approve loan application.");
         }
@@ -254,7 +248,7 @@ public class AllApplicationsView extends AppCompatActivity {
 
         if (isUpdated) {
             myMessageWindow("Success", "Loan application #" + loanID + " has been denied.");
-            loadAllApplications(); // Refresh the list
+            loadAllApplications();
         } else {
             myMessageWindow("Error", "Failed to deny loan application.");
         }

@@ -45,7 +45,7 @@ public class PendingApplicationsView extends AppCompatActivity {
         btn_approve_all = (Button) findViewById(R.id.btn_approve_all);
         btn_deny_all = (Button) findViewById(R.id.btn_deny_all);
 
-        // Set button click listeners
+
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +67,7 @@ public class PendingApplicationsView extends AppCompatActivity {
             }
         });
 
-        // Load applications initially
+
         loadPendingApplications();
     }
 
@@ -85,7 +85,7 @@ public class PendingApplicationsView extends AppCompatActivity {
     }
 
     private void loadPendingApplications() {
-        // Show loading state
+
         ll_loading.setVisibility(View.VISIBLE);
         ll_applications_container.setVisibility(View.GONE);
         ll_empty_state.setVisibility(View.GONE);
@@ -109,7 +109,7 @@ public class PendingApplicationsView extends AppCompatActivity {
                 if (status.equalsIgnoreCase("Pending")) {
                     pendingCount++;
 
-                    // Create application card (dynamic)
+                    // Create application card
                     View applicationCard = createApplicationCard(
                             resultSet.getInt(0),           // LoanID
                             resultSet.getString(1),        // EmployeeID
@@ -123,7 +123,6 @@ public class PendingApplicationsView extends AppCompatActivity {
                 }
             }
 
-            // Update UI based on results
             ll_loading.setVisibility(View.GONE);
 
             if (pendingCount > 0) {
@@ -157,7 +156,7 @@ public class PendingApplicationsView extends AppCompatActivity {
 
         tvEmployeeID.setText(employeeID);
         tvLoanType.setText(loanType);
-        tvStatus.setText("Pending"); // Always "Pending" since we filter by pending status
+        tvStatus.setText("Pending");
 
         // Format currency with peso sign
         tvAmount.setText("₱" + String.format("%,.2f", loanAmount));
@@ -165,7 +164,6 @@ public class PendingApplicationsView extends AppCompatActivity {
         tvDateApplied.setText(applicationDate);
         tvLoanID.setText("LOAN" + loanID); // Store loan ID in hidden field
 
-        // Set click listeners for approve and deny buttons
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -248,7 +246,7 @@ public class PendingApplicationsView extends AppCompatActivity {
     }
 
     private void showDenyAllConfirmation() {
-        // Count pending applications first
+        // Count pending applications
         int pendingCount = countPendingApplications();
 
         if (pendingCount == 0) {
@@ -294,7 +292,7 @@ public class PendingApplicationsView extends AppCompatActivity {
 
         if (isUpdated) {
             myMessageWindow("Success", "Loan application #" + loanID + " has been approved.");
-            loadPendingApplications(); // Refresh the list
+            loadPendingApplications();
         } else {
             myMessageWindow("Error", "Failed to approve loan application.");
         }
@@ -305,7 +303,7 @@ public class PendingApplicationsView extends AppCompatActivity {
 
         if (isUpdated) {
             myMessageWindow("Success", "Loan application #" + loanID + " has been denied.");
-            loadPendingApplications(); // Refresh the list
+            loadPendingApplications();
         } else {
             myMessageWindow("Error", "Failed to deny loan application.");
         }
@@ -330,7 +328,7 @@ public class PendingApplicationsView extends AppCompatActivity {
 
         if (approvedCount > 0) {
             myMessageWindow("Success", approvedCount + " loan application(s) have been approved.");
-            loadPendingApplications(); // Refresh the list
+            loadPendingApplications();
         } else {
             myMessageWindow("Info", "No applications were approved.");
         }
@@ -355,7 +353,7 @@ public class PendingApplicationsView extends AppCompatActivity {
 
         if (deniedCount > 0) {
             myMessageWindow("Success", deniedCount + " loan application(s) have been denied.");
-            loadPendingApplications(); // Refresh the list
+            loadPendingApplications();
         } else {
             myMessageWindow("Info", "No applications were denied.");
         }

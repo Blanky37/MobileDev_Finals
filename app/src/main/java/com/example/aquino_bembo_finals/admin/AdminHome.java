@@ -31,18 +31,17 @@ public class AdminHome extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize TextViews
         tv_pending_count = (TextView) findViewById(R.id.tv_pending_count);
         tv_approved_count = (TextView) findViewById(R.id.tv_approved_count);
 
-        // Update counts when activity starts
+        // Update application counts
         updateApplicationCounts();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Update counts every time the activity resumes (when coming back from other activities)
+        // Update counts every time the activity resumes
         updateApplicationCounts();
     }
 
@@ -53,12 +52,11 @@ public class AdminHome extends AppCompatActivity {
         int approvedCount = 0;
 
         if (resultSet.getCount() == 0) {
-            // No applications found
             tv_pending_count.setText("0");
             tv_approved_count.setText("0");
         } else {
             while (resultSet.moveToNext()) {
-                String status = resultSet.getString(5); // Column 5 is LoanStatus
+                String status = resultSet.getString(5);
 
                 if (status.equalsIgnoreCase("Pending")) {
                     pendingCount++;
@@ -67,7 +65,6 @@ public class AdminHome extends AppCompatActivity {
                 }
             }
 
-            // Update the TextViews with counts
             tv_pending_count.setText(String.valueOf(pendingCount));
             tv_approved_count.setText(String.valueOf(approvedCount));
         }
