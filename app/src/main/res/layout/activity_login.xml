@@ -120,14 +120,14 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <CheckBox
+                    <!-- <CheckBox
                         android:id="@+id/cb_remember_me"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Remember Me"
                         android:textColor="#7F8C8D"
-                        android:textSize="14sp" />
+                        android:textSize="14sp" /> -->
 
                     <TextView
                         android:id="@+id/tv_forgot_password"

@@ -27,7 +27,7 @@ public class Login extends AppCompatActivity {
     DatabaseHelper myData = new DatabaseHelper(this);
     TextInputEditText txtEmployeeID, txtPassword;
     TextInputLayout tilEmployeeID, tilPassword;
-    CheckBox cbRememberMe;
+    // CheckBox cbRememberMe;
     TextView tvRegisterLink, tvForgotPassword;
 
     @Override
@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
         txtPassword = (TextInputEditText) findViewById(R.id.et_password);
         tilEmployeeID = (TextInputLayout) findViewById(R.id.til_employee_id);
         tilPassword = (TextInputLayout) findViewById(R.id.til_password);
-        cbRememberMe = (CheckBox) findViewById(R.id.cb_remember_me);
+        // cbRememberMe = (CheckBox) findViewById(R.id.cb_remember_me);
         tvRegisterLink = (TextView) findViewById(R.id.tv_register_link);
         tvForgotPassword = (TextView) findViewById(R.id.tv_forgot_password);
 
