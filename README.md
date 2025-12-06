@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>💰 ABC Credit Loan Management System</h1>
+  <h1>ABC Credit Loan Management System</h1>
   <p><strong>A comprehensive Android application for managing employee loan applications and approvals</strong></p>
   
   ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
