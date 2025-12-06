@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentEmployeeId;
     private String currentEmployeeName;
     private int currentIsAdmin;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        databaseHelper = new DatabaseHelper(this);
+
         // Get user data from Login activity
         Intent intent = getIntent();
         if (intent != null) {
@@ -40,10 +43,17 @@ public class MainActivity extends AppCompatActivity {
             currentEmployeeName = intent.getStringExtra("EMPLOYEE_NAME");
             currentIsAdmin = intent.getIntExtra("IS_ADMIN", 0);
 
+
+            if (currentEmployeeName == null || currentEmployeeName.isEmpty()) {
+                if (currentEmployeeId != null && !currentEmployeeId.isEmpty()) {
+                    databaseHelper.GetUserDetails(currentEmployeeId);
+                    currentEmployeeName = databaseHelper.getFullName();
+                }
+            }
+
             // Save to SharedPreferences as a session
             saveUserToSharedPreferences();
         } else {
-            // Try to get from SharedPreferences if intent session is null
             loadUserFromSharedPreferences();
         }
 
@@ -52,10 +62,8 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
-        // Update the navigation header with user info
         updateNavigationHeader();
 
-        // Set up the navigation drawer
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_emergencyloan, R.id.nav_specialloan, R.id.nav_regularloan, R.id.nav_logout)
                 .setOpenableLayout(drawer)
@@ -66,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    // Save user data to SharedPreferences
     private void saveUserToSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -83,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
         currentEmployeeId = sharedPreferences.getString("employeeID", "");
         currentEmployeeName = sharedPreferences.getString("employeeName", "");
         currentIsAdmin = sharedPreferences.getInt("isAdmin", 0);
+
+        if ((currentEmployeeName == null || currentEmployeeName.isEmpty()) &&
+                currentEmployeeId != null && !currentEmployeeId.isEmpty()) {
+            databaseHelper.GetUserDetails(currentEmployeeId);
+            currentEmployeeName = databaseHelper.getFullName();
+        }
     }
 
     // Update the navigation header with user info
@@ -93,15 +106,23 @@ public class MainActivity extends AppCompatActivity {
         TextView tvUserName = headerView.findViewById(R.id.tv_nav_header_name);
         TextView tvUserEmail = headerView.findViewById(R.id.tv_nav_header_id);
 
-        if (tvUserName != null && currentEmployeeName != null) {
-            tvUserName.setText(currentEmployeeName);
-        }
-        if (tvUserEmail != null && currentEmployeeId != null) {
-            // Add admin badge for admin users
-            if (currentEmployeeId.equals("ADMIN001")) {
-                tvUserEmail.setText("ID: " + currentEmployeeId + " (Administrator)");
+        if (tvUserName != null) {
+            if (currentEmployeeName != null && !currentEmployeeName.isEmpty()) {
+                tvUserName.setText(currentEmployeeName);
             } else {
-                tvUserEmail.setText("ID: " + currentEmployeeId);
+                tvUserName.setText("User");
+            }
+        }
+        if (tvUserEmail != null) {
+            if (currentEmployeeId != null && !currentEmployeeId.isEmpty()) {
+                // Add admin badge for admin users
+                if (currentEmployeeId.equals("ADMIN001")) {
+                    tvUserEmail.setText("ID: " + currentEmployeeId + " (Administrator)");
+                } else {
+                    tvUserEmail.setText("ID: " + currentEmployeeId);
+                }
+            } else {
+                tvUserEmail.setText("ID: Unknown");
             }
         }
     }
@@ -122,5 +143,13 @@ public class MainActivity extends AppCompatActivity {
 
     public String getCurrentEmployeeId() {
         return currentEmployeeId;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (databaseHelper != null) {
+            databaseHelper.close();
+        }
     }
 }
