@@ -28,7 +28,7 @@ public class Login extends AppCompatActivity {
     TextInputEditText txtEmployeeID, txtPassword;
     TextInputLayout tilEmployeeID, tilPassword;
     // CheckBox cbRememberMe;
-    TextView tvRegisterLink, tvForgotPassword;
+    TextView tvRegisterLink; //tvForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
         tilPassword = (TextInputLayout) findViewById(R.id.til_password);
         // cbRememberMe = (CheckBox) findViewById(R.id.cb_remember_me);
         tvRegisterLink = (TextView) findViewById(R.id.tv_register_link);
-        tvForgotPassword = (TextView) findViewById(R.id.tv_forgot_password);
+        // tvForgotPassword = (TextView) findViewById(R.id.tv_forgot_password);
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,12 +57,14 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        /*
         tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 myMessageWindow("Forgot Password", "Please contact system administrator to reset your password.");
             }
         });
+        */
     }
 
     public void myMessageWindow(String title,String message){
