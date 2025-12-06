@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Information
     public static final String DATABASE_NAME = "ABCCreditLoanSystem.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 2; // Every change/modification of database, change `database_version`
 
     // User Table
     public static final String TABLE_USERS = "user_table";
@@ -144,7 +144,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_USERS, null, contentValues);
     }
 
-    // User Registration with separate name fields
+    // User Registration
     public boolean RegisterUser(String empID, String firstName, String middleInitial, String lastName,
                                 String dateHired, double basicSalary, String password, int isAdmin)
     {
@@ -222,7 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_MONTHLY_AMORTIZATION, monthlyAmort);
         contentValues.put(COL_LOAN_STATUS, status);
 
-        // Format application date as MM/dd/yyyy
+        // Format application date as MM/dd/yyyy, American date format
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         String currentDate = sdf.format(new Date());
         contentValues.put(COL_APPLICATION_DATE, currentDate);
@@ -266,16 +266,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int result = updateCmd.update(TABLE_LOANS, contentValues, COL_LOAN_ID + " = ?",
                 new String[] {String.valueOf(loanID)});
         return result > 0;
-    }
-
-    // Delete Loan Application
-    public int DeleteLoanApplication(int loanID)
-    {
-        SQLiteDatabase deleteCmd = this.getWritableDatabase();
-        int deletedRecord;
-        deletedRecord = deleteCmd.delete(TABLE_LOANS, COL_LOAN_ID + " = ?",
-                new String[]{String.valueOf(loanID)});
-        return deletedRecord;
     }
 
     // Get User Details by ID
@@ -340,70 +330,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return resultSet;
     }
 
-    // Get active loans count (pending loans)
-    public int GetActiveLoansCount() {
-        SQLiteDatabase readCmd = this.getReadableDatabase();
-        Cursor cursor = null;
-        int count = 0;
-        try {
-            cursor = readCmd.rawQuery(
-                    "SELECT COUNT(*) FROM " + TABLE_LOANS +
-                            " WHERE " + COL_LOAN_STATUS + " = 'Pending'",
-                    null
-            );
-            if (cursor.moveToFirst()) {
-                count = cursor.getInt(0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return count;
-    }
-
-    // Get total users count
-    public int GetTotalUsersCount() {
-        SQLiteDatabase readCmd = this.getReadableDatabase();
-        Cursor cursor = null;
-        int count = 0;
-        try {
-            cursor = readCmd.rawQuery("SELECT COUNT(*) FROM " + TABLE_USERS, null);
-            if (cursor.moveToFirst()) {
-                count = cursor.getInt(0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return count;
-    }
-
-    // Get total loans count
-    public int GetTotalLoansCount() {
-        SQLiteDatabase readCmd = this.getReadableDatabase();
-        Cursor cursor = null;
-        int count = 0;
-        try {
-            cursor = readCmd.rawQuery("SELECT COUNT(*) FROM " + TABLE_LOANS, null);
-            if (cursor.moveToFirst()) {
-                count = cursor.getInt(0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return count;
-    }
-
     // Getter Methods
     public String getEmployeeID() {
         return employeeID;
@@ -411,10 +337,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String getFirstName() {
         return firstName;
-    }
-
-    public String getMiddleInitial() {
-        return middleInitial;
     }
 
     public String getLastName() {
@@ -437,80 +359,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return basicSalary;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public int getIsAdmin() {
         return isAdmin;
     }
-
-    public String getLoanType() {
-        return loanType;
-    }
-
-    public double getLoanAmount() {
-        return loanAmount;
-    }
-
-    public int getMonthsToPay() {
-        return monthsToPay;
-    }
-
-    public double getInterestRate() {
-        return interestRate;
-    }
-
-    public double getServiceCharge() {
-        return serviceCharge;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public double getMonthlyAmortization() {
-        return monthlyAmortization;
-    }
-
-    public String getLoanStatus() {
-        return loanStatus;
-    }
-
-    public String getApplicationDate() {
-        return applicationDate;
-    }
-
-    // Setter Methods
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setMiddleInitial(String middleInitial) {
-        this.middleInitial = middleInitial;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setDateHired(String dateHired) {
-        this.dateHired = dateHired;
-    }
-
-    public void setBasicSalary(double basicSalary) {
-        this.basicSalary = basicSalary;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setIsAdmin(int isAdmin) {
-        this.isAdmin = isAdmin;
-    }
+    
 }

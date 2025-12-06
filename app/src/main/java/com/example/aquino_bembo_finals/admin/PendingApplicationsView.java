@@ -294,7 +294,7 @@ public class PendingApplicationsView extends AppCompatActivity {
 
         if (isUpdated) {
             myMessageWindow("Success", "Loan application #" + loanID + " has been approved.");
-            loadPendingApplications(); // Refresh the list
+            loadPendingApplications();
         } else {
             myMessageWindow("Error", "Failed to approve loan application.");
         }
@@ -305,7 +305,7 @@ public class PendingApplicationsView extends AppCompatActivity {
 
         if (isUpdated) {
             myMessageWindow("Success", "Loan application #" + loanID + " has been denied.");
-            loadPendingApplications(); // Refresh the list
+            loadPendingApplications();
         } else {
             myMessageWindow("Error", "Failed to deny loan application.");
         }
@@ -327,10 +327,9 @@ public class PendingApplicationsView extends AppCompatActivity {
         }
 
         resultSet.close();
-
         if (approvedCount > 0) {
             myMessageWindow("Success", approvedCount + " loan application(s) have been approved.");
-            loadPendingApplications(); // Refresh the list
+            loadPendingApplications();
         } else {
             myMessageWindow("Info", "No applications were approved.");
         }
@@ -352,10 +351,9 @@ public class PendingApplicationsView extends AppCompatActivity {
         }
 
         resultSet.close();
-
         if (deniedCount > 0) {
             myMessageWindow("Success", deniedCount + " loan application(s) have been denied.");
-            loadPendingApplications(); // Refresh the list
+            loadPendingApplications();
         } else {
             myMessageWindow("Info", "No applications were denied.");
         }

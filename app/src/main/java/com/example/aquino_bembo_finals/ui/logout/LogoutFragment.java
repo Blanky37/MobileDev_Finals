@@ -21,7 +21,7 @@ public class LogoutFragment extends Fragment {
     Button btnCancel, btnLogout;
 
     public LogoutFragment() {
-
+        // Required empty public constructor
     }
 
     @Override
@@ -36,7 +36,6 @@ public class LogoutFragment extends Fragment {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Navigate back to home
                 navigateToHome();
             }
         });
@@ -44,7 +43,6 @@ public class LogoutFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Show confirmation dialog
                 showLogoutConfirmation();
             }
         });
@@ -90,7 +88,6 @@ public class LogoutFragment extends Fragment {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Do nothing, just close the dialog
             }
         });
         builder.show();

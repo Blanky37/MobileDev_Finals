@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment {
         final NavController navController = Navigation.findNavController(view);
 
         binding.cardEmergencyLoan.setOnClickListener(v -> {
+            // Navigate to the Emergency Loan fragment
             navController.navigate(R.id.nav_emergencyloan);
         });
 
@@ -49,7 +50,7 @@ public class HomeFragment extends Fragment {
         });
 
         binding.cardLoanHistory.setOnClickListener(v -> {
-            // Navigate to the User History fragment using its ID from the navigation graph
+            // Navigate to the User History fragment using its ID from the navigation graph (menu)
             navController.navigate(R.id.nav_history);
         });
     }

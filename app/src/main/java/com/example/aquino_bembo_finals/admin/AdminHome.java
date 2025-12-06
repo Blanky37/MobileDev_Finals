@@ -31,7 +31,6 @@ public class AdminHome extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize TextViews
         tv_pending_count = (TextView) findViewById(R.id.tv_pending_count);
         tv_approved_count = (TextView) findViewById(R.id.tv_approved_count);
 
@@ -42,7 +41,7 @@ public class AdminHome extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Update counts every time the activity resumes (when coming back from other activities)
+        // Update counts every time
         updateApplicationCounts();
     }
 

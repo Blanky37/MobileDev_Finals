@@ -44,7 +44,6 @@ public class AllApplicationsView extends AppCompatActivity {
         tv_approved_count = (TextView) findViewById(R.id.tv_approved_count);
         tv_denied_count = (TextView) findViewById(R.id.tv_denied_count);
 
-        // Load all applications initially
         loadAllApplications();
     }
 
@@ -69,7 +68,6 @@ public class AllApplicationsView extends AppCompatActivity {
     }
 
     private void loadAllApplications() {
-        // Show loading state
         ll_loading.setVisibility(View.VISIBLE);
         ll_applications_container.setVisibility(View.GONE);
         ll_empty_state.setVisibility(View.GONE);
@@ -142,11 +140,9 @@ public class AllApplicationsView extends AppCompatActivity {
     private View createApplicationCard(int loanID, String employeeID, String loanType,
                                        double loanAmount, int monthsToPay, String status,
                                        String applicationDate) {
-        // Inflate the card layout
         LayoutInflater inflater = LayoutInflater.from(this);
         View cardView = inflater.inflate(R.layout.card_application, null);
 
-        // Set data to card views
         TextView tvEmployeeID = (TextView) cardView.findViewById(R.id.tv_employee_id);
         TextView tvLoanType = (TextView) cardView.findViewById(R.id.tv_loan_type);
         TextView tvStatus = (TextView) cardView.findViewById(R.id.tv_status);
@@ -243,7 +239,7 @@ public class AllApplicationsView extends AppCompatActivity {
 
         if (isUpdated) {
             myMessageWindow("Success", "Loan application #" + loanID + " has been approved.");
-            loadAllApplications(); // Refresh the list
+            loadAllApplications();
         } else {
             myMessageWindow("Error", "Failed to approve loan application.");
         }
@@ -254,7 +250,7 @@ public class AllApplicationsView extends AppCompatActivity {
 
         if (isUpdated) {
             myMessageWindow("Success", "Loan application #" + loanID + " has been denied.");
-            loadAllApplications(); // Refresh the list
+            loadAllApplications();
         } else {
             myMessageWindow("Error", "Failed to deny loan application.");
         }

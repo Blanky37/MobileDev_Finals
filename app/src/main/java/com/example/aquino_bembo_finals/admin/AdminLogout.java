@@ -22,15 +22,13 @@ public class AdminLogout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_logout);
 
-        // Initialize the buttons from the layout
         btnCancel = findViewById(R.id.btn_cancel);
         btnLogout = findViewById(R.id.btn_logout);
 
-        // Set OnClickListener for the Cancel button
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Simply finish the current activity to go back to the previous one (AdminHome)
+                // finish the current activity to go back to the previous one (AdminHome)
                 finish();
             }
         });
@@ -53,7 +51,7 @@ public class AdminLogout extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // Handle the back button press - act like the "Cancel" button
+                // Handle the back button press
                 finish();
             }
         };
@@ -70,7 +68,7 @@ public class AdminLogout extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // User clicked "Yes", proceed with logout
+                // User clicked "Yes", proceed logout
                 performLogout();
             }
         });
@@ -99,7 +97,6 @@ public class AdminLogout extends AppCompatActivity {
     }
 
     private void performLogout() {
-        // Show success message
         myMessageWindow("Logout Success", "You have been logged out successfully.");
 
         // Navigate to the Login activity after a short delay

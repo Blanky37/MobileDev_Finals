@@ -41,10 +41,8 @@ public class AllRecordsView extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize DatabaseHelper
         myData = new DatabaseHelper(this);
 
-        // Initialize UI elements
         ll_records_container = findViewById(R.id.ll_records_container);
         ll_empty_state = findViewById(R.id.ll_empty_state);
         ll_loading = findViewById(R.id.ll_loading);
@@ -53,10 +51,8 @@ public class AllRecordsView extends AppCompatActivity {
         btn_view_loans = findViewById(R.id.btn_view_loans);
         btn_view_both = findViewById(R.id.btn_view_both);
 
-        // Set initial button colors
         setActiveButton(btn_view_users);
 
-        // Set button click listeners
         btn_view_users.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +118,6 @@ public class AllRecordsView extends AppCompatActivity {
     }
 
     private void setActiveButton(MaterialButton activeButton) {
-        // Reset all buttons to default color
         btn_view_users.setBackgroundColor(Color.parseColor("#E0E0E0"));
         btn_view_loans.setBackgroundColor(Color.parseColor("#E0E0E0"));
         btn_view_both.setBackgroundColor(Color.parseColor("#E0E0E0"));
@@ -145,13 +140,12 @@ public class AllRecordsView extends AppCompatActivity {
     }
 
     private void loadUsers() {
-        // Show loading state
         showLoadingState();
 
         // Clear existing records
         ll_records_container.removeAllViews();
 
-        // Get all users from database using the new method
+        // Get all users from database
         Cursor cursor = null;
         try {
             cursor = myData.GetAllUsers();
@@ -185,13 +179,12 @@ public class AllRecordsView extends AppCompatActivity {
     }
 
     private void loadLoans() {
-        // Show loading state
         showLoadingState();
 
         // Clear existing records
         ll_records_container.removeAllViews();
 
-        // Get all loans from database using the new method
+        // Get all loans from database
         Cursor cursor = null;
         try {
             cursor = myData.GetAllLoansDetailed();
@@ -226,13 +219,12 @@ public class AllRecordsView extends AppCompatActivity {
     }
 
     private void loadBoth() {
-        // Show loading state
         showLoadingState();
 
         // Clear existing records
         ll_records_container.removeAllViews();
 
-        // Load users first
+        // Load users
         Cursor usersCursor = null;
         boolean hasRecords = false;
 
@@ -297,6 +289,8 @@ public class AllRecordsView extends AppCompatActivity {
         }
     }
 
+
+    // Helper methods for creating user cards
     private View createUserCard(String employeeID, String firstName, String lastName,
                                 String dateHired, double basicSalary, int isAdmin) {
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -326,6 +320,7 @@ public class AllRecordsView extends AppCompatActivity {
         return cardView;
     }
 
+    // Helper methods for creating loan cards
     private View createLoanCard(int loanID, String employeeID, String loanType,
                                 double loanAmount, int monthsToPay, String status,
                                 String applicationDate) {
