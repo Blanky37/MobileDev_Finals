@@ -52,15 +52,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String password;
     private int isAdmin;
 
-    private String loanType;
-    private double loanAmount;
-    private int monthsToPay;
-    private double interestRate;
-    private double serviceCharge;
-    private double totalAmount;
-    private double monthlyAmortization;
-    private String loanStatus;
-    private String applicationDate;
 
     private String UserTableDefinition()
     {

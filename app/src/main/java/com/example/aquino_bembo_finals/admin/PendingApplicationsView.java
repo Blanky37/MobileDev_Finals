@@ -158,7 +158,7 @@ public class PendingApplicationsView extends AppCompatActivity {
         tvLoanType.setText(loanType);
         tvStatus.setText("Pending");
 
-        // Format currency with peso sign
+
         tvAmount.setText("₱" + String.format("%,.2f", loanAmount));
         tvMonths.setText(monthsToPay + " months");
         tvDateApplied.setText(applicationDate);
@@ -220,7 +220,6 @@ public class PendingApplicationsView extends AppCompatActivity {
     }
 
     private void showApproveAllConfirmation() {
-        // Count pending applications
         int pendingCount = countPendingApplications();
         if (pendingCount == 0) {
             myMessageWindow("No Applications", "There are no pending applications to approve.");
@@ -246,7 +245,6 @@ public class PendingApplicationsView extends AppCompatActivity {
     }
 
     private void showDenyAllConfirmation() {
-        // Count pending applications
         int pendingCount = countPendingApplications();
 
         if (pendingCount == 0) {

@@ -251,7 +251,4 @@ public class LoanComputation {
         return percentFormat.format(rate);
     }
 
-    public static String formatNumber(int number) {
-        return numberFormat.format(number);
-    }
 }

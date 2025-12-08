@@ -152,6 +152,11 @@ public class AllApplicationsView extends AppCompatActivity {
         Button btnApprove = (Button) cardView.findViewById(R.id.btn_approve);
         Button btnDeny = (Button) cardView.findViewById(R.id.btn_deny);
 
+        //Adjust UI of buttons
+        btnApprove.setPadding(0,15,0,15);
+        btnDeny.setPadding(0,15,0,15);
+
+
         tvEmployeeID.setText(employeeID);
         tvLoanType.setText(loanType);
         tvAmount.setText("₱" + String.format("%,.2f", loanAmount));

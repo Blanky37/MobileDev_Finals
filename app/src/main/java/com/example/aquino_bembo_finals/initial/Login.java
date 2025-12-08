@@ -27,8 +27,7 @@ public class Login extends AppCompatActivity {
     DatabaseHelper myData = new DatabaseHelper(this);
     TextInputEditText txtEmployeeID, txtPassword;
     TextInputLayout tilEmployeeID, tilPassword;
-    // CheckBox cbRememberMe;
-    TextView tvRegisterLink; //tvForgotPassword;
+    TextView tvRegisterLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +44,7 @@ public class Login extends AppCompatActivity {
         txtPassword = (TextInputEditText) findViewById(R.id.et_password);
         tilEmployeeID = (TextInputLayout) findViewById(R.id.til_employee_id);
         tilPassword = (TextInputLayout) findViewById(R.id.til_password);
-        // cbRememberMe = (CheckBox) findViewById(R.id.cb_remember_me);
         tvRegisterLink = (TextView) findViewById(R.id.tv_register_link);
-        // tvForgotPassword = (TextView) findViewById(R.id.tv_forgot_password);
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,14 +54,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        /*
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myMessageWindow("Forgot Password", "Please contact system administrator to reset your password.");
-            }
-        });
-        */
+
     }
 
     public void myMessageWindow(String title,String message){
@@ -104,12 +94,12 @@ public class Login extends AppCompatActivity {
             return;
         }
 
-        // Check if user exists and credentials are correct
+
         if(myData.UserLogin(employeeID, password))
         {
             String welcomeMessage;
 
-            // Check if user is ADMIN001
+
             if (employeeID.equals("ADMIN001")) {
                 welcomeMessage = "Welcome System Administrator!";
                 myMessageWindow("Admin Login Success", welcomeMessage);

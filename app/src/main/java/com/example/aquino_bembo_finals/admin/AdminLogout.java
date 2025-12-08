@@ -37,7 +37,6 @@ public class AdminLogout extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Show confirmation dialog
                 showLogoutConfirmation();
             }
         });
@@ -107,8 +106,8 @@ public class AdminLogout extends AppCompatActivity {
                 // These flags clear the activity stack, so the user can't go back to the admin panel
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish(); // Finish the AdminLogout activity
+                finish();
             }
-        }, 1500); // 1.5-second delay
+        }, 1500);
     }
 }
