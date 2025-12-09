@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.database.Cursor;
-import android.widget.RadioButton;
 
 import com.example.aquino_bembo_finals.R;
 import com.example.aquino_bembo_finals.LoanComputation;
@@ -16,15 +15,13 @@ import com.example.aquino_bembo_finals.DatabaseHelper;
 import com.example.aquino_bembo_finals.MainActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class EmergencyLoanFragment extends Fragment {
 
-    private TextInputEditText etLoanAmount, etMonths;
-    private TextInputLayout tilMonths;
+    private TextInputEditText etLoanAmount;
     private android.widget.RadioGroup rgPaymentOption;
     private MaterialButton btnCalculate, btnApply;
     private View cardResults;
@@ -86,8 +83,6 @@ public class EmergencyLoanFragment extends Fragment {
 
     private void initializeViews(View view) {
         etLoanAmount = view.findViewById(R.id.et_loan_amount);
-        etMonths = view.findViewById(R.id.et_months);
-        tilMonths = view.findViewById(R.id.til_months);
         rgPaymentOption = view.findViewById(R.id.rg_payment_option);
 
         btnCalculate = view.findViewById(R.id.btn_calculate);
@@ -103,26 +98,8 @@ public class EmergencyLoanFragment extends Fragment {
         layoutInterest = view.findViewById(R.id.layout_interest);
         layoutMonthly = view.findViewById(R.id.layout_monthly);
 
-        // Show/hide months input
-        rgPaymentOption.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(android.widget.RadioGroup group, int checkedId) {
-                if (checkedId == R.id.rb_installment) {
-                    // Show months
-                    tilMonths.setVisibility(View.VISIBLE);
-                } else {
-                    // Hide months
-                    tilMonths.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        // Set default months to 6
-        etMonths.setText("6");
-
         if (hasPendingLoan) {
             etLoanAmount.setEnabled(false);
-            etMonths.setEnabled(false);
             rgPaymentOption.setEnabled(false);
             btnCalculate.setEnabled(false);
             btnApply.setEnabled(false);
@@ -165,7 +142,7 @@ public class EmergencyLoanFragment extends Fragment {
             String amountStr = etLoanAmount.getText().toString().trim();
             if (amountStr.isEmpty()) {
                 showMessage("Input Required", "Please enter loan amount");
-                hideResultsCard();
+                hideResultsCard(); // Hide results if previously shown
                 return;
             }
 
@@ -174,43 +151,21 @@ public class EmergencyLoanFragment extends Fragment {
             int selectedId = rgPaymentOption.getCheckedRadioButtonId();
             boolean isCashPayment = (selectedId == R.id.rb_cash);
 
-            int months = 6;
-
-            if (!isCashPayment) {
-                // For installment, get months from input
-                String monthsStr = etMonths.getText().toString().trim();
-                if (monthsStr.isEmpty()) {
-                    showMessage("Input Required", "Please enter number of months for installment");
-                    hideResultsCard();
-                    return;
-                }
-
-                months = Integer.parseInt(monthsStr);
-
-                // Validate months range
-                if (months < 1 || months > 6) {
-                    showMessage("Invalid Months", "Number of months must be between 1 and 6");
-                    hideResultsCard();
-                    return;
-                }
-            }
-
-            // Do calculation with months parameter
+            // Do calculation
             LoanComputation.EmergencyLoanResult result = LoanComputation.calculateEmergencyLoan(
                     loanAmount,
                     isCashPayment,
-                    months, // Pass months to calculation
                     new LoanComputation.LoanErrorListener() {
                         @Override
                         public void onLoanError(String title, String message) {
                             showMessage(title, message);
-                            hideResultsCard();
+                            hideResultsCard(); // Hide results on error
                         }
                     }
             );
 
             if (result == null) {
-                hideResultsCard();
+                hideResultsCard(); // Hide results if calculation failed
                 return;
             }
 
@@ -219,11 +174,11 @@ public class EmergencyLoanFragment extends Fragment {
             cardResults.setVisibility(View.VISIBLE);
 
         } catch (NumberFormatException e) {
-            showMessage("Invalid Input", "Please enter valid numeric values");
-            hideResultsCard();
+            showMessage("Invalid Input", "Please enter a valid numeric loan amount");
+            hideResultsCard(); // Hide results on error
         } catch (Exception e) {
             showMessage("Calculation Error", "An error occurred while calculating the loan. Please try again.");
-            hideResultsCard();
+            hideResultsCard(); // Hide results on error
         }
     }
 
@@ -239,17 +194,6 @@ public class EmergencyLoanFragment extends Fragment {
         tvResultServiceCharge.setText(LoanComputation.formatCurrency(result.serviceCharge));
         tvResultInterest.setText(LoanComputation.formatCurrency(result.interest));
         tvResultTotal.setText(LoanComputation.formatCurrency(result.totalPayment));
-
-        // Update interest rate display based on months
-        RadioButton rbInstallment = getView().findViewById(R.id.rb_installment);
-        if (rbInstallment != null && rbInstallment.isChecked()) {
-            android.widget.TextView interestLabel = getView().findViewById(R.id.layout_interest)
-                    .findViewById(android.R.id.text1);
-            if (interestLabel != null) {
-                double interestRate = 0.006;
-                interestLabel.setText("Interest (" + LoanComputation.formatPercent(interestRate) + "):");
-            }
-        }
 
         // Show/hide interest and monthly payment based on payment option
         if (result.isCashPayment) {
@@ -283,17 +227,12 @@ public class EmergencyLoanFragment extends Fragment {
 
         int selectedId = rgPaymentOption.getCheckedRadioButtonId();
         boolean isCashPayment = (selectedId == R.id.rb_cash);
-
-        int months = isCashPayment ? 6 : Integer.parseInt(etMonths.getText().toString().trim());
-        String paymentOption = isCashPayment ?
-                "Cash after 6 months" :
-                months + " months installment";
+        String paymentOption = isCashPayment ? "Cash after 6 months" : "6 months installment";
 
         // Calculate loan details again for database
         LoanComputation.EmergencyLoanResult result = LoanComputation.calculateEmergencyLoan(
                 loanAmount,
                 isCashPayment,
-                months,
                 new LoanComputation.LoanErrorListener() {
                     @Override
                     public void onLoanError(String title, String message) {
@@ -334,7 +273,7 @@ public class EmergencyLoanFragment extends Fragment {
                         "Emergency Loan",
                         result.loanAmount,
                         result.months,
-                        0.006, // Fixed interest rate for emergency loan
+                        result.isCashPayment ? 0.00 : 0.006,
                         result.serviceCharge,
                         result.totalPayment,
                         result.monthlyPayment,
@@ -370,7 +309,6 @@ public class EmergencyLoanFragment extends Fragment {
 
     private void disableForm() {
         etLoanAmount.setEnabled(false);
-        etMonths.setEnabled(false);
         rgPaymentOption.setEnabled(false);
         btnCalculate.setEnabled(false);
         btnApply.setEnabled(false);
@@ -378,10 +316,8 @@ public class EmergencyLoanFragment extends Fragment {
 
     private void resetForm() {
         etLoanAmount.setText("");
-        etMonths.setText("6");
 
         rgPaymentOption.check(R.id.rb_installment);
-        tilMonths.setVisibility(View.VISIBLE); // Show months input by default
 
         cardResults.setVisibility(View.GONE);
 

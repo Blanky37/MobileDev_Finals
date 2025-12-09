@@ -34,7 +34,7 @@ public class LoanComputation {
         }
     }
 
-    public static EmergencyLoanResult calculateEmergencyLoan(double loanAmount, boolean isCashPayment, int months, LoanErrorListener errorListener) {
+    public static EmergencyLoanResult calculateEmergencyLoan(double loanAmount, boolean isCashPayment, LoanErrorListener errorListener) {
         // Validate loan amount range
         if (loanAmount < 5000) {
             if (errorListener != null) {
@@ -53,30 +53,21 @@ public class LoanComputation {
             }
             return null;
         }
-        if (!isCashPayment && (months < 1 || months > 6)) {
-            if (errorListener != null) {
-                errorListener.onLoanError("Invalid Months",
-                        "Number of months for installment must be between 1 and 6.\n\n" +
-                                "Please enter a value between 1 and 6 months.");
-            }
-            return null;
-        }
 
         double serviceCharge = loanAmount * 0.01;
         double interest = 0;
         double totalPayment;
         double monthlyPayment = 0;
+        int months = 6;
         double interestRate = 0.006;
 
-        int monthsForInterest = isCashPayment ? 6 : months;
-
-        interest = loanAmount * monthsForInterest * interestRate;
+        interest = loanAmount * months * interestRate;
 
         if (isCashPayment) {
             // Cash after 6 months: Loan Amount + Service Charge + Interest
             totalPayment = loanAmount + serviceCharge + interest;
         } else {
-            // Payable in N months: (Loan Amount + Service Charge + Interest) / N
+            // Payable in 6 months: (Loan Amount + Service Charge + Interest) / 6
             totalPayment = loanAmount + serviceCharge + interest;
             monthlyPayment = totalPayment / months;
         }
