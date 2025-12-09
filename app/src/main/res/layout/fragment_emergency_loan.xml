@@ -114,6 +114,7 @@
                         android:id="@+id/rb_cash"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:padding="8dp"
                         android:text="Cash after 6 months"
                         android:textSize="14sp" />
@@ -122,12 +123,31 @@
                         android:id="@+id/rb_installment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checked="true"
                         android:padding="8dp"
                         android:text="Payable in 6 months (Installment)"
                         android:textSize="14sp" />
 
                 </RadioGroup>
+
+                <!---->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_months"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Number of Months (1-6)"
+                    android:visibility="gone"
+                    app:boxBackgroundMode="outline"
+                    app:startIconDrawable="@drawable/calendar_dots">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_months"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="6" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Calculate Button -->
                 <com.google.android.material.button.MaterialButton
