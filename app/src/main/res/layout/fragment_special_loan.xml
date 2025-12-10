@@ -73,12 +73,13 @@
                 <!-- Loan Amount Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_loan_amount"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Loan Amount"
                     app:boxBackgroundMode="outline"
-                    app:startIconDrawable="@drawable/money">
+                    app:startIconDrawable="@drawable/ic_peso_sign">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_loan_amount"
@@ -109,6 +110,7 @@
                 <!-- Months to Pay Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_months"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

@@ -264,7 +264,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Regular Loan Icon"
-                    android:src="@drawable/money"
+                    android:src="@drawable/ic_peso_sign"
                     android:tint="#27AE60" />
 
                 <LinearLayout

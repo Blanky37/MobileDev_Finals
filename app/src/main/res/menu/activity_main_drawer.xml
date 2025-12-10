@@ -18,7 +18,7 @@
             android:title="Special Loan" />
         <item
             android:id="@+id/nav_regularloan"
-            android:icon="@drawable/money"
+            android:icon="@drawable/ic_peso_sign"
             android:title="Regular Loan" />
         <item
             android:id="@+id/nav_history"
