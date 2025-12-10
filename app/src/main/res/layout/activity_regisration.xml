@@ -84,11 +84,11 @@
                 <!-- First Name Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_first_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="First Name"
-                    app:boxBackgroundMode="outline"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -103,11 +103,11 @@
                 <!-- Middle Initial Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_middle_initial"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:hint="Middle Initial"
-                    app:boxBackgroundMode="outline"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -123,11 +123,11 @@
                 <!-- Last Name Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_last_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:hint="Last Name"
-                    app:boxBackgroundMode="outline"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -142,11 +142,11 @@
                 <!-- Date Hired Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_date_hired"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:hint="Date Hired"
-                    app:boxBackgroundMode="outline"
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/calendar_today">
 
@@ -168,13 +168,14 @@
                     android:text="Click to select date"
                     android:textColor="#7F8C8D"
                     android:textSize="12sp" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_basic_salary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:hint="Basic Salary"
-                    app:boxBackgroundMode="outline"
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/ic_menu_gallery">
 
@@ -208,11 +209,11 @@
                 <!-- Password Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_password"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Password"
-                    app:boxBackgroundMode="outline"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="true"
                     app:helperText="Minimum 6 characters"
@@ -231,11 +232,11 @@
                 <!-- Confirm Password Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_confirm_password"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:hint="Confirm Password"
-                    app:boxBackgroundMode="outline"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/key">
@@ -264,14 +265,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Your Employee ID"
-                            android:textColor="#7F8C8D"
-                            android:textSize="12sp" />
+                            android:text="Your Employee ID:"
+                            android:textColor="#16A085"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_employee_id_preview"
@@ -279,7 +280,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="ABC12345"
-                            android:textColor="#27AE60"
+                            android:textColor="#117A65"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -389,6 +390,5 @@
             android:layout_height="24dp" />
 
     </LinearLayout>
-
 
 </ScrollView>

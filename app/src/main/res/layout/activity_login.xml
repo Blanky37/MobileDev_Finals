@@ -74,11 +74,10 @@
                 <!-- Employee ID Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_employee_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:hint="Employee ID"
-                    app:boxBackgroundMode="outline"
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/id_person">
 
@@ -94,11 +93,11 @@
                 <!-- Password Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_password"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Password"
-                    app:boxBackgroundMode="outline"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/key">
@@ -111,6 +110,7 @@
                         android:maxLines="1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <!-- Remember Me and Forgot Password -->
                 <!-- <LinearLayout
