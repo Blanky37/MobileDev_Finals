@@ -12,4 +12,5 @@
     <color name="status_pending">#FF8800</color>
     <color name="status_approved">#669900</color>
     <color name="status_denied">#CC0000</color>
+    <color name="colorPrimary">#126b5b</color>
 </resources>

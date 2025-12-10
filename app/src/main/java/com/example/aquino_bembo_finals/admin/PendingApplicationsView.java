@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -49,6 +50,8 @@ public class PendingApplicationsView extends AppCompatActivity {
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(PendingApplicationsView.this, "Refreshing applications...", Toast.LENGTH_SHORT).show();
+
                 loadPendingApplications();
             }
         });
