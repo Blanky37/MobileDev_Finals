@@ -598,7 +598,6 @@ test: Add unit tests for LoanComputation class
 ### Testing Guidelines
 
 #### Manual Testing Checklist
-
 **Authentication:**
 - [x] Login with valid admin credentials
 - [x] Login with valid employee credentials
@@ -628,10 +627,10 @@ test: Add unit tests for LoanComputation class
 - [ ] Back button behavior is correct
 - [ ] Logout returns to login screen
 
-## 📚 Dependencies
+## Dependencies
 
 ### Core Dependencies
-```kotlin
+```java
 dependencies {
     // Android Core
     implementation(libs.appcompat) // 1.7.1
@@ -678,7 +677,6 @@ dependencies {
 - No data export functionality
 
 ## Security Considerations
-
 ### Current Implementation
 - Passwords stored in plain text (SQLite database)
 - Local authentication only
