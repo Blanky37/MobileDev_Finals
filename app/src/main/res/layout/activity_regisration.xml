@@ -177,7 +177,7 @@
                     android:layout_marginTop="12dp"
                     android:hint="Basic Salary"
                     app:errorEnabled="true"
-                    app:startIconDrawable="@drawable/ic_menu_gallery">
+                    app:startIconDrawable="@drawable/ic_peso_sign">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_basic_salary"
