@@ -26,7 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F39C12"
+                android:background="@color/colorPrimary"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -75,7 +75,7 @@
                 android:text="Refresh"
                 android:textAllCaps="false"
                 android:drawablePadding="8dp"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/colorPrimary"
                 android:drawableStart="@drawable/ic_menu_gallery" />
 
             <Button
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:backgroundTint="#27AE60"
+                android:backgroundTint="#0A9233"
                 android:text="Approve All"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
@@ -94,7 +94,7 @@
                 android:id="@+id/btn_deny_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#E74C3C"
+                android:backgroundTint="#9F2933"
                 android:text="Deny All"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
