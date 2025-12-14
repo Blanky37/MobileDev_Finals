@@ -669,20 +669,6 @@ dependencies {
 9. **In-app Messaging**: Communication between admin and employees
 10. **Payment Integration**: Connect with payment gateways
 
-### Known Limitations
-- Offline-only operation (no network sync)
-- Single admin account (no role management)
-- No loan repayment tracking
-- Limited to one device (no multi-device sync)
-- No data export functionality
-
-## Security Considerations
-### Current Implementation
-- Passwords stored in plain text (SQLite database)
-- Local authentication only
-- No encryption for sensitive data
-- Session management via SharedPreferences
-
 ### Recommended Improvements for Production
 ```java
 // Use Android Keystore for password encryption
@@ -702,5 +688,4 @@ This project is developed for educational purposes as part of the Mobile Develop
 <div align="center">
   <p>Developed by <strong>Aquino & Bembo</strong> | De La Salle University – Dasmariñas</p>
   <p>Final Project for <strong>Mobile Development 2025</strong></p>
-  <p>📱 Android Application | 💾 SQLite Database | 🎨 Material Design 3</p>
 </div>
