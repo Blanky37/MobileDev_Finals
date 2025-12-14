@@ -19,7 +19,7 @@
 - [Troubleshooting](#-troubleshooting)
 - [Development Guidelines](#-development-guidelines)
 
-## 📋 Project Overview
+## Project Overview
 
 This ABC Credit Loan Management System is developed in compliance with our subject ***"Mobile Development"*** as a finals project for companies requiring management of employee loan applications and processing. Built using **Android SDK** with **SQLite** for local database operations, the system provides a comprehensive platform for both administrators and employees.
 
@@ -39,7 +39,7 @@ The project includes:
 - **UI Framework**: Material Design 3 with Navigation Components
 - **Architecture**: MVVM Pattern with View Binding
 
-## ✨ System Features
+## System Features
 
 ### Admin Dashboard
 - **Pending Applications**: View and approve/reject pending loan applications
@@ -58,7 +58,7 @@ The project includes:
 - **Profile Management**: View employee information and ID
 - **Secure Logout**: End session securely
 
-## 💳 Loan Types
+## Loan Types
 
 ### 1. Emergency Loan
 **Quick financial assistance for urgent needs**
@@ -153,7 +153,7 @@ Monthly Payment = Total Amount ÷ Months
 - Total Amount: ₱272,000.00
 - Monthly Payment: ₱7,555.56
 
-## 🏗️ System Architecture
+## System Architecture
 
 ### Application Flow
 
@@ -336,7 +336,7 @@ If auto-sync fails:
    - Select a device definition (e.g., Pixel 5)
    - Choose a system image (API 24+)
    - Finish setup
-3. Click the **Run** button (▶️) or press `Shift + F10`
+3. Click the **Run** button or press `Shift + F10`
 4. Select your emulator from the list
 
 #### Option B: Using Physical Device
@@ -347,7 +347,7 @@ If auto-sync fails:
    - Go to **Settings → Developer Options**
    - Toggle **USB Debugging** ON
 3. Connect device via USB
-4. Click **Run** (▶️) and select your device
+4. Click **Run** and select your device
 
 ### 6. Verify Installation
 
@@ -356,7 +356,7 @@ Upon successful installation, you should see:
 - Option to register or login
 - No compilation errors in the build output
 
-## 🔑 Default Credentials
+## Default Credentials
 
 ### Administrator Account
 ```
@@ -378,7 +378,7 @@ Register a new employee account to test the employee features:
 3. System will auto-generate an Employee ID
 4. Use the generated ID and password to login
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Common Issues and Solutions
 
@@ -437,7 +437,7 @@ Solution:
    - Add logs in onCreateView, onViewCreated, onDestroyView
    - Verify proper navigation and data passing
 
-## 📝 Development Guidelines
+## Development Guidelines
 
 ### Code Structure
 
@@ -656,7 +656,7 @@ dependencies {
 }
 ```
 
-## 🔄 Future Enhancements
+## Future Enhancements
 
 ### Planned Features
 1. **Push Notifications**: Alert employees when loan status changes
@@ -677,7 +677,7 @@ dependencies {
 - Limited to one device (no multi-device sync)
 - No data export functionality
 
-## 🔐 Security Considerations
+## Security Considerations
 
 ### Current Implementation
 - Passwords stored in plain text (SQLite database)
@@ -695,7 +695,7 @@ dependencies {
 // Add session timeout mechanism
 ```
 
-## 📄 License
+## License
 
 This project is developed for educational purposes as part of the Mobile Development course finals requirement.
 
